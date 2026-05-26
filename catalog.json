@@ -6,7 +6,7 @@
     "skills": 378,
     "prompts": 99,
     "agents": 0,
-    "code_files": 507
+    "code_files": 487
   },
   "phases": [
     {
@@ -12568,14 +12568,8 @@
           "has_quiz": true,
           "has_notebook": true,
           "code_files": [
-            "main.py",
-            "ts/src/cost.ts",
-            "ts/src/index.ts",
-            "ts/src/migrations.ts",
-            "ts/src/server.ts",
-            "ts/src/types.ts",
-            "ts/tests/cost.test.ts",
-            "ts/tests/migrations.test.ts"
+            "dashboard.ts",
+            "main.py"
           ],
           "outputs": [
             {
@@ -12607,14 +12601,7 @@
           "has_notebook": true,
           "code_files": [
             "main.py",
-            "ts/src/agent.ts",
-            "ts/src/coordinator.ts",
-            "ts/src/index.ts",
-            "ts/src/runtime.ts",
-            "ts/src/types.ts",
-            "ts/src/workspace.ts",
-            "ts/tests/coordinator.test.ts",
-            "ts/tests/runtime.test.ts"
+            "team.ts"
           ],
           "outputs": [
             {
@@ -12646,14 +12633,7 @@
           "has_notebook": true,
           "code_files": [
             "main.py",
-            "ts/src/index.ts",
-            "ts/src/pricing.ts",
-            "ts/src/rollup.ts",
-            "ts/src/server.ts",
-            "ts/src/spans.ts",
-            "ts/src/types.ts",
-            "ts/tests/rollup.test.ts",
-            "ts/tests/spans.test.ts"
+            "server.ts"
           ],
           "outputs": [
             {
