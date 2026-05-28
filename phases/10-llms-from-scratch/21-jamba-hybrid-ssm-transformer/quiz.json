@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can a state space model keep inference memory essentially constant with sequence length?",
+      "options": [
+        "Because it stores every previous token in a growing KV cache",
+        "Because it updates a fixed-size recurrent state instead of attending back to all prior tokens",
+        "Because it uses no learned parameters",
+        "Because it only works for encoders"
+      ],
+      "correct": 1,
+      "explanation": "The lesson writes the SSM as a recurrence over a fixed hidden state h_t. That means each step only needs the previous state and the new input rather than the entire token history."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the main intuition behind hybrid SSM-transformer models like Jamba?",
+      "options": [
+        "Use transformers for exact recall and SSM layers for the cheap bulk of long-context processing",
+        "Replace all attention with MoE routing",
+        "Use SSMs only for tokenization and transformers only for decoding",
+        "Combine two tokenizers so the model sees more vocabulary"
+      ],
+      "correct": 0,
+      "explanation": "Pure transformers remember everything but pay quadratic attention cost, while pure SSMs are cheap but can lose exact long-range recall. The hybrid recipe keeps some attention layers for recall-critical behavior and uses SSMs elsewhere."
+    },
+    {
+      "stage": "post",
+      "question": "What layer pattern defines the original Jamba recipe?",
+      "options": [
+        "One attention layer for every seven Mamba layers, with MoE on every other layer",
+        "One Mamba layer for every seven attention layers, with MoE everywhere",
+        "Alternating attention and CNN layers only",
+        "Eight attention layers followed by eight Mamba layers"
+      ],
+      "correct": 0,
+      "explanation": "The lesson summarizes Jamba with two numbers: l = 8 for the 1:7 attention-to-Mamba ratio and e = 2 for MoE frequency. That produces eight-layer groups with one attention layer and seven Mamba layers, while every other layer is MoE-enabled."
+    },
+    {
+      "stage": "post",
+      "question": "Why can Jamba fit a 256k context on a single 80GB GPU more easily than a pure transformer of similar depth?",
+      "options": [
+        "Because only the attention layers contribute to KV cache, while SSM layers use fixed-size recurrent state",
+        "Because Jamba removes embeddings and output heads",
+        "Because Mamba layers make sequence length irrelevant for weights",
+        "Because MoE halves the hidden size of every block"
+      ],
+      "correct": 0,
+      "explanation": "In the lesson's memory budget, only a small subset of layers store KV tensors across 256k tokens. The many Mamba layers instead keep compact recurrent state, which is why the hybrid saves so much memory relative to all-attention stacks."
+    },
+    {
+      "stage": "post",
+      "question": "Which trio of innovations does the lesson attribute to Mamba-3?",
+      "options": [
+        "RoPE scaling, grouped-query attention, and quantization-aware training",
+        "Exponential-trapezoidal discretization, complex-valued state updates, and MIMO projections",
+        "Auxiliary-loss-free routing, MTP, and DualPipe",
+        "FlashAttention, tree attention, and training-time test"
+      ],
+      "correct": 1,
+      "explanation": "Mamba-3 is presented as the strongest pure-SSM baseline in 2026 because it reintroduces more expressive state dynamics. The lesson highlights its new discretization scheme, complex state evolution, and multi-input multi-output projections."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the difference between speaker verification and speaker identification?",
+      "options": ["Verification is 1:1, while identification is 1:N", "Verification uses text transcripts, while identification uses audio only", "Verification is for music, while identification is for speech", "Verification predicts timestamps, while identification predicts emotions"],
+      "correct": 0,
+      "explanation": "The lesson defines verification as checking whether a test utterance matches a claimed identity. Identification instead searches over an enrollment bank to answer which speaker the clip belongs to."
+    },
+    {
+      "stage": "pre",
+      "question": "Why might averaging several clean enrollment recordings help a speaker verification system?",
+      "options": ["It forces the model to output text instead of embeddings", "It reduces the influence of noise or quirks from any single enrollment clip", "It guarantees zero false accepts", "It makes threshold tuning unnecessary"],
+      "correct": 1,
+      "explanation": "The lesson warns that one noisy enrollment sample can poison the anchor representation. Using multiple clean samples and averaging their embeddings produces a more stable reference for later cosine scoring."
+    },
+    {
+      "stage": "post",
+      "question": "What does Equal Error Rate (EER) mean in speaker verification?",
+      "options": ["The point where accuracy equals recall", "The threshold where false accept rate equals false reject rate", "The average cosine similarity of same-speaker pairs", "The percentage of clips with identical transcripts"],
+      "correct": 1,
+      "explanation": "The lesson calls EER the central number in speaker verification. It is measured at the decision threshold where false accepts and false rejects are equal, which gives a single summary of verification quality."
+    },
+    {
+      "stage": "post",
+      "question": "Which description of ECAPA-TDNN matches the lesson?",
+      "options": ["A CTC-based ASR model that outputs subword tokens", "A speaker-embedding network built from TDNN-style 1D conv blocks with channel attention and attentive pooling", "A diarization-only clustering algorithm with no learned embeddings", "A 2D CNN classifier trained only on MFCC means"],
+      "correct": 1,
+      "explanation": "The lesson presents ECAPA-TDNN as the dominant speaker-recognition architecture through 2026. It uses enhanced TDNN blocks, channel attention, and attentive statistics pooling to produce compact speaker embeddings such as 192-dimensional vectors."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, what is a common pitfall when using cosine similarity for verification?",
+      "options": ["Using embeddings that are not L2-normalized first", "Using more than one enrollment clip", "Computing scores on held-out development data", "Tuning a threshold for the target domain"],
+      "correct": 0,
+      "explanation": "The pitfalls section explicitly warns against cosine scoring on non-normalized embeddings. Without L2 normalization, embedding magnitude can dominate the score and make thresholding unstable across conditions."
+    }
+  ]
+}

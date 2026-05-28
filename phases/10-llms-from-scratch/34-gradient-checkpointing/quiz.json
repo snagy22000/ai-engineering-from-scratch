@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do activations often become the real memory bottleneck during transformer training?",
+      "options": [
+        "Because backward needs many intermediate tensors from every layer, and their volume grows with batch, sequence length, and hidden size",
+        "Because activations are always stored in FP64",
+        "Because optimizers do not require any extra memory",
+        "Because only embeddings are differentiable"
+      ],
+      "correct": 0,
+      "explanation": "The lesson emphasizes that backprop must retain inputs and derivative-relevant intermediates, not just model weights. On long contexts, those saved tensors can outweigh the weight and optimizer memory by a large margin."
+    },
+    {
+      "stage": "pre",
+      "question": "What tradeoff does gradient checkpointing make?",
+      "options": [
+        "More memory for less compute",
+        "Less memory in exchange for extra recomputation FLOPs during backward",
+        "Less memory by shrinking the model's vocabulary",
+        "More throughput by skipping gradient computation"
+      ],
+      "correct": 1,
+      "explanation": "Checkpointing stores only selected boundary activations during forward. When backward needs missing intermediates, it reruns parts of the forward pass, saving memory while paying extra compute."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson's cost model, what is the approximate FLOP overhead of naive full checkpointing?",
+      "options": [
+        "About 5%",
+        "About 15%",
+        "About 33%",
+        "About 100%"
+      ],
+      "correct": 2,
+      "explanation": "The lesson models a normal step as forward plus backward, roughly 3 units of layer FLOPs. Full checkpointing adds about one extra forward worth of recompute, raising that to 4 units, which is about a one-third overhead."
+    },
+    {
+      "stage": "post",
+      "question": "Why can selective checkpointing be much cheaper than checkpointing whole layers?",
+      "options": [
+        "It recomputes only the most memory-expensive parts such as attention instead of the whole layer",
+        "It avoids the backward pass on feed-forward networks",
+        "It works only when activations are offloaded to CPU",
+        "It reduces parameter count so less recomputation is needed"
+      ],
+      "correct": 0,
+      "explanation": "Not all saved tensors cost the same amount of memory. The lesson highlights that quadratic attention intermediates dominate long-context memory, so recomputing just those pieces can save most of the memory for only a small extra compute cost."
+    },
+    {
+      "stage": "post",
+      "question": "For uniform-cost layers, what segment-size heuristic does the lesson cite as the classic memory/compute balance?",
+      "options": [
+        "Checkpoint every layer twice",
+        "Use about sqrt(L) checkpoint segments for L layers",
+        "Never checkpoint the middle layers",
+        "Set the segment size equal to the vocabulary size"
+      ],
+      "correct": 1,
+      "explanation": "The Chen et al. style rule of thumb is to break an L-layer stack into about sqrt(L) segments. The lesson presents that as the classic compromise where memory and recompute both scale like the square root rather than linearly."
+    }
+  ]
+}

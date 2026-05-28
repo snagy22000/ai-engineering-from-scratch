@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is a watermark alone not enough to secure a voice generation system?",
+      "options": ["Because watermarks make audio too loud", "Because attackers may generate or modify audio without preserving the watermark", "Because watermarks can only be used on text files", "Because watermarks replace the need for consent checks"],
+      "correct": 1,
+      "explanation": "A watermark helps identify compliant, cooperative outputs, but it does not stop adversaries from generating unmarked audio or stripping the mark through transformations. That is why the lesson pairs watermarking with anti-spoof detection."
+    },
+    {
+      "stage": "pre",
+      "question": "What does Equal Error Rate (EER) measure in detection tasks?",
+      "options": ["The sample rate where both clips match", "The point where false accepts and false rejects are equal", "The number of watermark bits recovered", "The latency of the detector in milliseconds"],
+      "correct": 1,
+      "explanation": "EER is a threshold-based metric that summarizes the tradeoff between accepting spoofs and rejecting genuine audio. It is commonly used in speaker verification and anti-spoofing benchmarks because it gives one operating-point summary."
+    },
+    {
+      "stage": "post",
+      "question": "What three defense layers does the lesson recommend for 2026 voice systems?",
+      "options": ["Compression, normalization, and denoising", "Anti-spoof detection, audio watermarking, and authenticated provenance", "Only liveness prompts and speaker embeddings", "Only encryption and GPU attestation"],
+      "correct": 1,
+      "explanation": "The lesson organizes defenses into three related layers: a detector for real-vs-fake classification, a watermark for AI-generated outputs, and signed provenance metadata like C2PA. The point is that no single layer covers all attack surfaces."
+    },
+    {
+      "stage": "post",
+      "question": "What is one major advantage of AudioSeal highlighted in the lesson?",
+      "options": ["It stores unlimited payload bits with no distortion", "It is localized, fast, and robust to common edits like compression and noise", "It is the best defense against aggressive pitch shifting", "It removes the need for any detector"],
+      "correct": 1,
+      "explanation": "The lesson presents AudioSeal as the default open watermark because it can detect marks at fine temporal resolution, runs very fast, and survives common transformations such as MP3 or AAC compression and modest speed or noise changes. Those properties make it practical for production workflows."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, what attack is the universal weakness for current audio watermarks?",
+      "options": ["Silence trimming", "Pitch shifting", "File renaming", "Stereo-to-mono conversion"],
+      "correct": 1,
+      "explanation": "The lesson quotes benchmark evidence that pitch shift can collapse bit recovery accuracy across watermark methods. That weakness is exactly why the system should not rely on watermarking alone and must also deploy anti-spoof detectors."
+    }
+  ]
+}

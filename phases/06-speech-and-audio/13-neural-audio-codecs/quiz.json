@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do language-model-style systems need a codec before they can generate audio?",
+      "options": ["Because codecs amplify quiet sounds before decoding", "Because transformers require continuous waveforms instead of symbols", "Because codecs convert continuous audio into discrete tokens a model can predict", "Because codecs remove all speaker identity from speech"],
+      "correct": 2,
+      "explanation": "Audio waveforms are continuous, but token-based language models operate over discrete symbols. A neural audio codec bridges that gap by turning waveform frames into token sequences that can be modeled autoregressively."
+    },
+    {
+      "stage": "pre",
+      "question": "If you want shorter sequences for a transformer to model, which codec property matters most?",
+      "options": ["Frame rate", "Speaker gender balance", "FFT window color map", "Microphone brand"],
+      "correct": 0,
+      "explanation": "Frame rate determines how many token frames are produced per second of audio. Lower frame rates yield shorter sequences, which makes transformer-based generation faster and easier."
+    },
+    {
+      "stage": "post",
+      "question": "What is the main lesson's claim about the semantic-acoustic split used by Mimi-style codecs?",
+      "options": ["It makes audio files larger but easier to archive", "It separates content from timbre so generation scales better for speech models", "It removes the need for quantization entirely", "It is only useful for music compression, not speech"],
+      "correct": 1,
+      "explanation": "The lesson argues that reconstruction-only codecs force one model to learn both language structure and acoustic detail in the same token stream. Splitting semantic content into codebook 0 and leaving later codebooks for acoustic detail makes text-conditioned speech generation much more effective."
+    },
+    {
+      "stage": "post",
+      "question": "In Residual Vector Quantization (RVQ), what does each later codebook quantize?",
+      "options": ["The microphone noise floor", "A random subset of speaker embeddings", "The residual error left by previous codebooks", "Only the semantic transcript"],
+      "correct": 2,
+      "explanation": "RVQ uses a cascade of codebooks rather than one giant codebook. The first codebook captures a coarse approximation, and each later codebook quantizes the remaining residual so reconstruction improves progressively."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, which codec is the best starting point for streaming full-duplex speech systems like Moshi?",
+      "options": ["Mimi", "Opus", "DAC-44.1k", "WebRTC VAD"],
+      "correct": 0,
+      "explanation": "The lesson explicitly maps streaming full-duplex speech to Mimi because its 12.5 Hz frame rate keeps token sequences short and its semantic-acoustic split supports generative speech modeling well. Opus is recommended for compression, not token-based generation."
+    }
+  ]
+}

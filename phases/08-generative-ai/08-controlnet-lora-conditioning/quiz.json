@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is text prompting alone often insufficient for controlling an image generator?",
+      "options": [
+        "Text prompts cannot describe any objects",
+        "Text usually does not specify exact spatial layout, pose, or perspective well enough",
+        "Diffusion models ignore nouns in prompts",
+        "Text prompts only work for black-and-white images"
+      ],
+      "correct": 1,
+      "explanation": "The lesson argues that prompts only pin down a small fraction of what matters in an image. Spatial details like pose, depth, and composition are hard to express precisely in words, which motivates additional conditioning tools."
+    },
+    {
+      "stage": "pre",
+      "question": "What practical goal makes LoRA appealing before you know its math?",
+      "options": [
+        "Training a tiny update on top of a frozen big model instead of retraining the whole model",
+        "Eliminating the need for prompts entirely",
+        "Converting images into video clips",
+        "Replacing the VAE with a larger decoder"
+      ],
+      "correct": 0,
+      "explanation": "Before the details, the lesson frames LoRA as a way to teach a model a new style or subject without touching all base weights. That is attractive because the delta is much smaller, cheaper to train, and easier to swap at inference time."
+    },
+    {
+      "stage": "post",
+      "question": "How does ControlNet preserve the original diffusion backbone while adding spatial control?",
+      "options": [
+        "It retrains the whole base model from scratch for every condition type",
+        "It clones the encoder half, keeps the original frozen, and injects condition features back through zero-initialized skip connections",
+        "It only changes the text encoder vocabulary",
+        "It removes the decoder from the U-Net"
+      ],
+      "correct": 1,
+      "explanation": "The lesson describes ControlNet as a cloned encoder attached to a frozen pretrained model. Zero-convolution connections start at zero so the system initially behaves like the original model, then gradually learns how the conditioning image should nudge intermediate features."
+    },
+    {
+      "stage": "post",
+      "question": "What is LoRA mathematically adding to a frozen weight matrix W?",
+      "options": [
+        "A low-rank delta BA so the adapted weight is W + BA",
+        "A new optimizer state tensor only used at sampling",
+        "A convolutional feature map from the input image",
+        "A VAE scaling constant"
+      ],
+      "correct": 0,
+      "explanation": "The doc gives LoRA as W' = W + Delta W with Delta W = B @ A and rank r much smaller than d. This reduces trainable parameters from roughly d squared to 2dr, which is why LoRAs are far smaller than full fine-tunes."
+    },
+    {
+      "stage": "post",
+      "question": "If you need exact pose control plus a learned brand style, which combination best matches the lesson's composability matrix?",
+      "options": [
+        "ControlNet for style and LoRA for pose",
+        "Use only a negative prompt",
+        "ControlNet for spatial structure together with a LoRA for style or subject",
+        "Replace both with Textual Inversion"
+      ],
+      "correct": 2,
+      "explanation": "The lesson summarizes the roles as 'ControlNet \u2248 spatial' and 'LoRA \u2248 semantic.' A pose or depth map should be handled by ControlNet, while style, subject, or brand identity is the kind of reusable concept LoRA is designed to add."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do real-time audio systems process sound in small fixed-size chunks instead of waiting for a whole recording?",
+      "options": ["To keep latency low and let downstream stages react incrementally", "To guarantee perfect recognition accuracy", "To avoid using any buffers", "To force audio into stereo format"],
+      "correct": 0,
+      "explanation": "The lesson frames streaming audio as a sequence of small blocks that each stage can process immediately. That chunked flow is what keeps latency low enough for interactive systems."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the main job of a ring buffer in a real-time audio pipeline?",
+      "options": ["Let a producer write frames and a consumer read them without repeated allocations in the hot path", "Compress audio into Opus packets for the network", "Replace VAD by detecting speech directly", "Store full transcripts for later summarization"],
+      "correct": 0,
+      "explanation": "The lesson defines the ring buffer as a fixed-size circular buffer between producer and consumer threads. Its purpose is to smooth streaming flow while avoiding costly allocations in the hottest part of the pipeline."
+    },
+    {
+      "stage": "post",
+      "question": "When the user starts speaking while the assistant is talking, what does the lesson say the system must do?",
+      "options": ["Detect the barge-in, stop TTS, and discard remaining LLM output within about 100 ms", "Wait for the assistant to finish speaking before listening again", "Mute the microphone for at least 500 ms to avoid overlap", "Restart the entire session and reconnect WebRTC"],
+      "correct": 0,
+      "explanation": "The interruption section says barge-in handling requires detecting user speech, stopping TTS, and discarding the unfinished LLM response. The lesson adds that this must happen within roughly 100 ms or the assistant feels deaf."
+    },
+    {
+      "stage": "post",
+      "question": "What trade-off does the lesson describe for a jitter buffer?",
+      "options": ["Too small causes audible gaps, while too large adds latency", "Too small lowers accuracy, while too large increases GPU memory use", "Too small breaks echo cancellation, while too large corrupts transcripts", "Too small drops Opus support, while too large disables VAD"],
+      "correct": 0,
+      "explanation": "The lesson explains that network packets can arrive late or out of order, so the jitter buffer reorders and smooths them. But it warns that an undersized buffer creates glitches, while an oversized one directly increases end-to-end latency."
+    },
+    {
+      "stage": "post",
+      "question": "Which open-source component does the lesson recommend as the default solution for echo cancellation?",
+      "options": ["WebRTC AEC3", "Silero VAD 4.0", "Parakeet-CTC-0.6B", "vLLM-streaming"],
+      "correct": 0,
+      "explanation": "In the gotchas section, the lesson warns that without acoustic echo cancellation the bot's own TTS can leak back into ASR. It then names WebRTC AEC3 as the open-source default for solving that problem."
+    }
+  ]
+}

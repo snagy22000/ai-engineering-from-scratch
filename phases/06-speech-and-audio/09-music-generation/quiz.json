@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How can a music generation system be guided to keep an existing tune while changing instrumentation or style?",
+      "options": ["Condition it on a melody representation such as a chromagram", "Only increase the sample rate to 48 kHz", "Convert the song into speaker embeddings", "Use speaker diarization before decoding"],
+      "correct": 0,
+      "explanation": "The lesson discusses melody-conditioned generation as a way to preserve tune while changing timbre. It specifically mentions chromagram-style conditioning for prompts like turning a melody into a string quartet."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is generating a full song with lyrics generally harder than generating a short instrumental clip?",
+      "options": ["Songs require long-range structure plus vocal and lyric coherence", "Instrumentals need more GPU memory than songs", "Lyrics remove the need for conditioning", "Short clips cannot be generated autoregressively"],
+      "correct": 0,
+      "explanation": "The lesson separates instrumental generation from full-song generation because songs add more constraints than just local audio quality. A model has to maintain structure over time while also handling vocals, lyrics, and phrasing coherently."
+    },
+    {
+      "stage": "post",
+      "question": "What does FAD measure in the lesson?",
+      "options": ["How well vocals stay on pitch in generated songs", "Fréchet distance between embedding distributions of real and generated audio", "The exact BPM drift over a 4-minute track", "The copyright risk score of a prompt"],
+      "correct": 1,
+      "explanation": "The lesson defines FAD as Fréchet Audio Distance computed in an embedding space such as VGGish or PANNs. It is useful for distribution-level regression testing, though the lesson also says it is not a replacement for human listening."
+    },
+    {
+      "stage": "post",
+      "question": "Which model is described as the open community's closest thing to Suno for full-song lyric-conditioned generation?",
+      "options": ["Stable Audio Open", "ACE-Step XL", "MusicGen-small", "AudioLDM2"],
+      "correct": 1,
+      "explanation": "The lesson says ACE-Step, especially the 4B XL release, extends codec-token generation toward full songs with lyrics. It explicitly calls it the open community's closest thing to Suno."
+    },
+    {
+      "stage": "post",
+      "question": "What safe-to-ship pattern does the lesson recommend for avoiding commercial-vocal licensing baggage with open models?",
+      "options": ["Always prompt for celebrity style and filter later", "Generate only 4-minute songs with vocals", "Skip disclosure metadata if the model is open source", "Generate instrumental-only music with tools like MusicGen or Stable Audio Open"],
+      "correct": 3,
+      "explanation": "In the legal section, the lesson lists instrumental-only generation as one of the safest shipping patterns. It contrasts that with commercial vocal generation, which carries more licensing and compliance complications."
+    }
+  ]
+}

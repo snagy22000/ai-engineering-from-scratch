@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why are long reasoning tasks a better fit for parallel inference than short chat turns?",
+      "options": [
+        "Because long tasks give coordination overhead more room to amortize",
+        "Because short chat disables KV caches",
+        "Because only long tasks can use RoPE",
+        "Because short chat requires encoder-decoder models"
+      ],
+      "correct": 0,
+      "explanation": "Parallel workers have to spend some effort orienting to each other and avoiding duplicate work. The lesson points out that thousands of reasoning tokens can absorb that overhead, while short chats cannot."
+    },
+    {
+      "stage": "pre",
+      "question": "What makes Hogwild! inference different from ordinary multi-agent or voting setups?",
+      "options": [
+        "Each worker uses a different model family",
+        "Workers coordinate through one shared KV cache instead of an explicit protocol or vote",
+        "It requires supervised fine-tuning before inference",
+        "It disables autoregressive decoding entirely"
+      ],
+      "correct": 1,
+      "explanation": "Traditional multi-agent systems usually add an explicit coordinator, branching logic, or voting rule. Hogwild! instead exposes the same shared evolving context to all workers and relies on the model's own reasoning abilities to self-organize."
+    },
+    {
+      "stage": "post",
+      "question": "What is the core Hogwild! setup described in the lesson?",
+      "options": [
+        "Multiple workers with independent prompts and independent KV caches",
+        "Multiple workers running the same model while reading from and writing to a single shared KV cache",
+        "One worker generating tokens while others only score them",
+        "A beam search tree stored in CPU memory"
+      ],
+      "correct": 1,
+      "explanation": "Every worker is another instance of the same LLM working on the same problem. The distinctive ingredient is that tokens produced by any worker immediately become part of the shared context everyone else can read."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson say RoPE makes shared-cache Hogwild! inference tractable?",
+      "options": [
+        "RoPE removes causal masking so workers can see future tokens",
+        "RoPE positions are encoded by rotation, so shared-cache entries can be reused without re-encoding older tokens after concurrent writes",
+        "RoPE compresses the KV cache to constant size",
+        "RoPE forces workers to generate in lockstep"
+      ],
+      "correct": 1,
+      "explanation": "With rotary embeddings, positional information is baked into the query/key rotations rather than stored in a fixed learned table. The lesson argues this makes it far easier for workers to share cache entries without invalidating everything on every write."
+    },
+    {
+      "stage": "post",
+      "question": "Which workload does the lesson describe as a poor fit for Hogwild! inference?",
+      "options": [
+        "Long multi-step reasoning on one node",
+        "Any task with multiple proof branches",
+        "Short interactive chat or multi-node deployments where coordination overhead dominates",
+        "Reasoning models like DeepSeek-R1 or QwQ"
+      ],
+      "correct": 2,
+      "explanation": "Hogwild! remains experimental partly because its benefits are narrow. The lesson specifically warns against short chats, non-reasoning models, and multi-node setups where the coordination and synchronization costs swamp any parallelism gains."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What limitation remains even after Flash Attention reduces attention's activation-memory traffic?",
+      "options": [
+        "Attention still requires comparing many token pairs, so the arithmetic cost remains quadratic",
+        "Attention can no longer be causal",
+        "KV caches stop working on long contexts",
+        "Softmax becomes approximate instead of exact"
+      ],
+      "correct": 0,
+      "explanation": "Flash Attention improves the memory system behavior, but it does not change which token pairs are scored. Full attention still evaluates an N\u00d7N pattern, so the arithmetic complexity remains O(N^2)."
+    },
+    {
+      "stage": "pre",
+      "question": "In causal sliding-window attention with window W, which past tokens can position i attend to?",
+      "options": [
+        "Only token 0 and token i",
+        "Every token in the whole prefix",
+        "Tokens from roughly i-W+1 through i",
+        "Only tokens after position i"
+      ],
+      "correct": 2,
+      "explanation": "Sliding-window attention limits each query to a local causal neighborhood instead of the full prefix. That is why it reduces both compute and cache requirements compared with full attention."
+    },
+    {
+      "stage": "post",
+      "question": "How does the lesson characterize the complexity of sliding-window attention with window size W?",
+      "options": [
+        "O(log N)",
+        "O(N \u00b7 W)",
+        "O(W^2) independent of sequence length",
+        "O(2 \u00b7 N^2)"
+      ],
+      "correct": 1,
+      "explanation": "If each of N positions only scores about W keys instead of all N keys, the work scales with N times W. The same locality also shrinks the useful KV cache to the active window rather than the full context."
+    },
+    {
+      "stage": "post",
+      "question": "Why do production long-context models often interleave SWA layers with occasional global full-attention layers?",
+      "options": [
+        "Because SWA cannot be implemented with masks",
+        "Because global layers restore long-range retrieval that pure local windows tend to lose",
+        "Because full-attention layers are cheaper than SWA layers",
+        "Because differential attention requires an encoder-decoder stack"
+      ],
+      "correct": 1,
+      "explanation": "Pure local windows can miss far-away evidence even if they are much cheaper. Mixing in periodic global layers lets information travel across the sequence while still keeping most layers in the cheaper local regime."
+    },
+    {
+      "stage": "post",
+      "question": "What is the defining computation in differential attention as described in the lesson?",
+      "options": [
+        "Average two value matrices before softmax",
+        "Subtract a learned \u03bb-scaled second attention map from a first attention map",
+        "Apply RoPE twice to the same query vectors",
+        "Replace softmax with sigmoid gating only"
+      ],
+      "correct": 1,
+      "explanation": "Differential attention computes two separate softmax attention maps and then subtracts \u03bb\u00b7A2 from A1 before applying values. The goal is to cancel the attention sink and reallocate probability mass toward genuinely relevant tokens."
+    }
+  ]
+}

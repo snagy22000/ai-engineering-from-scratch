@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a classic ASR -> LLM -> TTS pipeline have a latency floor?",
+      "options": ["Because each stage adds its own processing delay", "Because it can only run offline", "Because transformers cannot process text and audio together", "Because VAD is forbidden in speech systems"],
+      "correct": 0,
+      "explanation": "In a pipelined voice stack, VAD, STT, reasoning, and TTS each contribute their own minimum latency. Even with optimization and overlap, the shape of the pipeline creates a floor that is hard to beat."
+    },
+    {
+      "stage": "pre",
+      "question": "What does full-duplex mean in a voice system?",
+      "options": ["It records in stereo only", "It hears and speaks at the same time", "It uses two GPUs for every session", "It translates only after a conversation ends"],
+      "correct": 1,
+      "explanation": "Full-duplex systems do not force strict turn boundaries before they can respond. They can listen while speaking, which enables interruption handling and natural back-channel behaviors."
+    },
+    {
+      "stage": "post",
+      "question": "In Moshi, what runs in parallel during generation?",
+      "options": ["Only user audio and a separate OCR stream", "User audio, Moshi audio, and Moshi text inner monologue", "Speaker verification, diarization, and watermark decoding only", "Three independent TTS vocoders with no shared model"],
+      "correct": 1,
+      "explanation": "The lesson describes Moshi as a unified model over three streams: incoming user Mimi tokens, outgoing Moshi Mimi tokens, and a text stream representing Moshi's inner monologue. This parallel structure is central to its full-duplex behavior."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson say Moshi's inner-monologue text stream is useful?",
+      "options": ["It replaces all audio generation with subtitles", "It improves semantic coherence and gives transcripts for free", "It is only needed to compress Mimi tokens", "It prevents the model from speaking while listening"],
+      "correct": 1,
+      "explanation": "The text stream makes language structure explicit instead of forcing the model to hide all semantics inside acoustic tokens. The lesson says this improves coherence, makes the model easier to adapt, and produces transcripts automatically."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, when is a traditional pipeline still the better choice than Moshi?",
+      "options": ["When you need enterprise agents with tool calling and stronger reasoning", "When you need any speech output at all", "When you want lower latency than 200 ms", "When you want to use Mimi tokens"],
+      "correct": 0,
+      "explanation": "The lesson is explicit that Moshi is great for low-latency dialogue, but not for tool calling or long-form reasoning. For enterprise agents that need external tools and stronger factual performance, the classic pipeline remains the preferred architecture."
+    }
+  ]
+}

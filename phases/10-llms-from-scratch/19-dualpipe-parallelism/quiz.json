@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is a pipeline bubble in distributed training?",
+      "options": [
+        "Extra memory used by optimizer states",
+        "Idle GPU time while a pipeline stage waits for inputs or gradients",
+        "The communication cost of loading checkpoints",
+        "A failure mode unique to tensor parallelism"
+      ],
+      "correct": 1,
+      "explanation": "Pipeline parallelism only works well if every stage stays busy. A bubble is the wasted time when a rank has nothing to compute because the forward activation or backward gradient has not arrived yet."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does MoE training make cross-node all-to-all communication such a serious concern?",
+      "options": [
+        "Because every token must be routed to experts that may live on other GPUs and then gathered back",
+        "Because MoE forbids sharding experts across ranks",
+        "Because all-to-all replaces the backward pass entirely",
+        "Because MoE layers remove attention and norms"
+      ],
+      "correct": 0,
+      "explanation": "Expert parallelism scatters experts across devices, so tokens have to travel to whichever experts the router selected. The lesson notes that this dispatch-and-combine traffic can approach a 1:1 ratio with compute at DeepSeek-V3 scale."
+    },
+    {
+      "stage": "post",
+      "question": "Which four components make up a DualPipe forward chunk?",
+      "options": [
+        "Tokenizer, embedding lookup, KV quantization, eval gate",
+        "Attention, all-to-all dispatch, MLP expert compute, and all-to-all combine",
+        "Forward, backward, optimizer step, checkpoint save",
+        "RMSNorm, RoPE, SwiGLU, and output head"
+      ],
+      "correct": 1,
+      "explanation": "DualPipe gets its overlap windows by breaking the chunk into compute and communication pieces instead of treating the whole layer as one monolith. That is what lets dispatch and combine traffic hide inside neighboring compute windows."
+    },
+    {
+      "stage": "post",
+      "question": "What does DualPipe's bidirectional scheduling require each device to store?",
+      "options": [
+        "Only optimizer states for two micro-batches",
+        "Both the early-pipeline layers and the mirrored late-pipeline layers needed to serve traffic from both ends",
+        "A separate tokenizer for forward and backward streams",
+        "No model parameters at all during warmup"
+      ],
+      "correct": 1,
+      "explanation": "DualPipe injects micro-batches from both ends of the pipeline so the two streams can overlap. To do that, a device must be able to execute work for both directions, which is why the original schedule keeps two parameter copies."
+    },
+    {
+      "stage": "post",
+      "question": "What tradeoff does DualPipeV make relative to full DualPipe?",
+      "options": [
+        "It keeps two parameter copies but doubles the bubble fraction",
+        "It drops the second parameter copy and accepts a slightly larger bubble, especially when expert parallelism is light",
+        "It removes all compute-communication overlap and becomes identical to GPipe",
+        "It works only for inference, not training"
+      ],
+      "correct": 1,
+      "explanation": "DualPipeV is the \"cut-in-half\" refinement described in the lesson. It saves memory by avoiding the duplicate parameter set, but that simplification gives back a bit of the ideal bubble behavior of full DualPipe."
+    }
+  ]
+}

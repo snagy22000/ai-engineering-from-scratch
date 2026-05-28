@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does adding multiple learning agents make RL harder than the single-agent case?",
+      "options": [
+        "The reward always becomes sparse",
+        "The environment becomes non-stationary because other agents are also changing",
+        "Episodes can no longer terminate",
+        "Discounting no longer applies"
+      ],
+      "correct": 1,
+      "explanation": "The lesson says each agent treats the other agents as part of the environment. When those agents update their policies, the effective environment changes over time and breaks stationary assumptions behind many single-agent methods."
+    },
+    {
+      "stage": "pre",
+      "question": "In a cooperative task where agents share one team reward, what major challenge appears immediately?",
+      "options": [
+        "Credit assignment across agents",
+        "Choosing a tokenizer",
+        "Estimating language-model KL",
+        "Removing exploration entirely"
+      ],
+      "correct": 0,
+      "explanation": "Shared rewards make it unclear which agent's behavior caused success or failure. The lesson highlights this as a central multi-agent problem because the team signal does not naturally identify individual contributions."
+    },
+    {
+      "stage": "post",
+      "question": "What is centralized training with decentralized execution (CTDE)?",
+      "options": [
+        "Each agent trains only on its own local observations and uses a global policy at deployment",
+        "A centralized critic can use global state and joint actions during training, while each agent executes from local observations",
+        "All agents share one replay buffer but no critic",
+        "One agent learns while the others stay fixed forever"
+      ],
+      "correct": 1,
+      "explanation": "CTDE separates what is available at training time from what is available at runtime. The critic can see the full state and joint action to stabilize learning, but deployed policies remain decentralized and depend only on local observations."
+    },
+    {
+      "stage": "post",
+      "question": "Which regime is described as the dominant 2026 choice for cooperative MARL in the lesson?",
+      "options": [
+        "Independent Q-learning only",
+        "MAPPO or IPPO with a centralized/shared critic",
+        "Pure league play for all settings",
+        "MuZero with no critics"
+      ],
+      "correct": 1,
+      "explanation": "The lesson lists MAPPO and IPPO with a centralized value function as the modern workhorse for cooperative settings. They fit the CTDE pattern and handle coordination better than naive independent learning on tightly coupled tasks."
+    },
+    {
+      "stage": "post",
+      "question": "Why is league play preferred over plain self-play in some adversarial or general-sum environments?",
+      "options": [
+        "It removes the need for exploration",
+        "It avoids strategy cycles by training against a population of past and current opponents",
+        "It guarantees tabular convergence proofs",
+        "It works only when rewards are fully shared"
+      ],
+      "correct": 1,
+      "explanation": "The doc explains that some games have rock-paper-scissors style cycles where a single opponent is not enough. League play broadens training with a pool of opponents, including exploiters, so agents do not overfit to one current strategy."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do frontier teams insist on manifests, hashes, and typed artifacts instead of ad hoc notebooks?",
+      "options": [
+        "Because YAML files train faster than notebooks",
+        "Because pipeline hygiene is how teams catch corruption, stale inputs, and unreproducible stage handoffs",
+        "Because notebooks cannot run on GPUs",
+        "Because typed artifacts automatically improve benchmark scores"
+      ],
+      "correct": 1,
+      "explanation": "A frontier run can waste enormous time and budget if one checkpoint or dataset is wrong. The lesson frames manifests, hashes, and stage contracts as the boring discipline that keeps expensive long runs from silently drifting."
+    },
+    {
+      "stage": "pre",
+      "question": "What should determine whether a model is shippable?",
+      "options": [
+        "Whether training finished without crashing",
+        "Whether a reviewer says the outputs look good",
+        "Whether the run passes predeclared numeric evaluation gates",
+        "Whether the quantized model is smaller than the baseline"
+      ],
+      "correct": 2,
+      "explanation": "The lesson treats shipping as a gate decision, not a vibe check. Numeric thresholds for metrics, safety, KL drift, and cost are defined before the run starts and decide SHIP versus HOLD."
+    },
+    {
+      "stage": "post",
+      "question": "Why should the output hash of stage N match the input hash of stage N+1?",
+      "options": [
+        "It lets the next stage choose a larger batch size",
+        "It proves the downstream stage is consuming exactly the artifact the upstream stage produced",
+        "It removes the need for experiment tracking",
+        "It makes runs bit-identical across all hardware"
+      ],
+      "correct": 1,
+      "explanation": "The manifest uses a hash chain to verify artifact integrity between stages. If the hashes differ, the pipeline halts immediately instead of letting corruption or wrong inputs propagate."
+    },
+    {
+      "stage": "post",
+      "question": "Which responsibility belongs to the orchestrator described in the lesson?",
+      "options": [
+        "Writing a new tokenizer algorithm for every run",
+        "Choosing subjective ship criteria after training is done",
+        "Resolving the DAG, skipping already-cached artifacts, running stages, and halting on contract violations",
+        "Replacing the experiment tracker and object store with local notebooks"
+      ],
+      "correct": 2,
+      "explanation": "The orchestrator is intentionally narrow and boring. It reads the manifest, runs or skips stages based on hashes, captures outputs and costs, and exits as soon as a stage breaks its contract."
+    },
+    {
+      "stage": "post",
+      "question": "If stage 06 (SFT) fails, what does the rollback logic invalidate?",
+      "options": [
+        "Only stage 06, because later stages are independent",
+        "Only the pre-training checkpoint at stage 04",
+        "Stage 06 and every descendant stage that depends on it",
+        "Every stage in the pipeline including the tokenizer"
+      ],
+      "correct": 2,
+      "explanation": "The lesson says rollback is computed from the dependency graph, not improvised under pressure. A failure at SFT invalidates the failed stage plus downstream alignment, eval, quantization, and serving artifacts that depend on it."
+    }
+  ]
+}

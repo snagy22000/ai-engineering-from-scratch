@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is speech recognition harder than classifying a whole audio clip into one label?",
+      "options": ["Audio clips never contain silence", "The system must output a variable-length token sequence whose timing is not known in advance", "Speech recognition only works on stereo audio", "Words always align one-to-one with fixed-size frames"],
+      "correct": 1,
+      "explanation": "The lesson frames ASR as a structural alignment problem rather than a single-label classification problem. Audio frames and output tokens do not line up one-to-one, and the number of output tokens is unknown before decoding."
+    },
+    {
+      "stage": "pre",
+      "question": "What does a word-level error metric generally need to account for when comparing a transcript to a reference?",
+      "options": ["Only substitutions", "Only insertions", "Substitutions, deletions, and insertions", "Only timing offsets"],
+      "correct": 2,
+      "explanation": "The lesson defines WER using the three standard edit operations from Levenshtein distance. ASR quality is not just about wrong words replacing correct ones, but also about missing or extra words."
+    },
+    {
+      "stage": "post",
+      "question": "In greedy CTC decoding, what do you do after taking the per-frame argmax sequence?",
+      "options": ["Reverse the token order and drop vowels", "Collapse consecutive repeats and remove blank tokens", "Average all token probabilities into one final token", "Run a second FFT over the logits"],
+      "correct": 1,
+      "explanation": "The lesson's CTC decoder follows two rules: merge repeated consecutive predictions and remove the blank symbol. That is how a long frame-level output collapses into the final transcript string."
+    },
+    {
+      "stage": "post",
+      "question": "What is the key advantage of RNN-T over plain CTC emphasized in the lesson?",
+      "options": ["It never needs training labels", "It adds token-history conditioning, giving a streamable model with an internal language model", "It removes the need for an encoder", "It guarantees lower WER than all attention models"],
+      "correct": 1,
+      "explanation": "The lesson explains that CTC assumes conditional independence across frames, so it lacks an internal language model. RNN-T adds a predictor over previous tokens plus a joiner, preserving streamability while modeling token history."
+    },
+    {
+      "stage": "post",
+      "question": "How does the lesson define Word Error Rate (WER)?",
+      "options": ["(Correct words) / (Predicted words)", "(S + D + I) / N using word-level substitutions, deletions, and insertions", "(Character edits) / (Audio duration in seconds)", "1 - BLEU score"],
+      "correct": 1,
+      "explanation": "WER is defined in the lesson as (S + D + I) divided by the number of reference words N. It is the word-level Levenshtein distance normalized by reference length, so lower is better."
+    }
+  ]
+}

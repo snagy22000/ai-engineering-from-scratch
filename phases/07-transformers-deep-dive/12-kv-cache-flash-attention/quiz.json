@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In autoregressive decoding, why can earlier tokens' key and value vectors be reused instead of recomputed at every step?",
+      "options": [
+        "Because the model resamples all earlier tokens on each step",
+        "Because prefix hidden states are deterministic once the prefix is fixed",
+        "Because Flash Attention stores them in CPU RAM automatically",
+        "Because causal masking removes the need for keys and values"
+      ],
+      "correct": 1,
+      "explanation": "For a fixed prefix, the model will always produce the same hidden states and therefore the same K and V vectors. Recomputing them on every new token is redundant work, which is exactly why a KV cache speeds up decoding."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does attention become memory-bound at long sequence lengths on modern GPUs?",
+      "options": [
+        "Because softmax cannot run on GPUs",
+        "Because long-context attention spends much of its time moving large intermediate tensors to and from HBM",
+        "Because GPU SRAM is too slow for matrix multiplication",
+        "Because inference uses more FLOPs than training"
+      ],
+      "correct": 1,
+      "explanation": "Standard attention materializes large score and probability matrices, so the bottleneck becomes memory traffic rather than raw arithmetic. The lesson emphasizes that repeated HBM reads and writes dominate once contexts get large."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, what is the KV-cache memory formula per token per layer per head?",
+      "options": [
+        "d_head * dtype_size",
+        "2 * d_head * dtype_size",
+        "2 * n_layers * d_head * dtype_size",
+        "N^2 * dtype_size"
+      ],
+      "correct": 1,
+      "explanation": "Each token stores both a key vector and a value vector, so there is a factor of 2 in the formula. Multiplying by d_head and the bytes per element gives the per-token, per-layer, per-head cache cost."
+    },
+    {
+      "stage": "post",
+      "question": "What is Flash Attention's main systems-level improvement over standard attention?",
+      "options": [
+        "It changes attention from exact to approximate",
+        "It removes softmax entirely",
+        "It tiles the computation so the full N\u00d7N matrix never has to be materialized in HBM",
+        "It makes attention bidirectional during inference"
+      ],
+      "correct": 2,
+      "explanation": "Flash Attention keeps Q, K, V tiles and the running softmax state in fast on-chip SRAM instead of writing the whole score matrix to HBM. That preserves exact attention while drastically reducing memory traffic and wall-clock time."
+    },
+    {
+      "stage": "post",
+      "question": "Why does grouped-query attention (GQA) help KV-cache usage?",
+      "options": [
+        "It increases the number of KV heads to improve recall",
+        "It stores queries in the cache instead of keys and values",
+        "It shares fewer KV heads across many query heads, reducing cached K/V memory",
+        "It disables the cache for global-attention layers"
+      ],
+      "correct": 2,
+      "explanation": "The lesson highlights GQA as a major KV-cache win because you do not need separate K and V tensors for every query head. Fewer KV heads mean less memory per token, which becomes crucial at very long context lengths."
+    }
+  ]
+}

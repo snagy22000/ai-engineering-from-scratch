@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What makes speculative decoding acceptable in production rather than just a heuristic speed hack?",
+      "options": [
+        "It exactly preserves the verifier model's output distribution",
+        "It always increases benchmark scores",
+        "It removes the need for a target model",
+        "It guarantees every drafted token is correct"
+      ],
+      "correct": 0,
+      "explanation": "The lesson opens by stressing the Leviathan theorem: speculative decoding changes latency, not the verifier's sampling distribution. That exactness is why teams can enable it without accepting a quality regression."
+    },
+    {
+      "stage": "pre",
+      "question": "Which variable most strongly determines speculative-decoding speedup?",
+      "options": [
+        "The tokenizer vocabulary size",
+        "The draft token acceptance rate α",
+        "The number of optimizer states saved during training",
+        "The verifier's rope_theta setting"
+      ],
+      "correct": 1,
+      "explanation": "The wall-time formula depends on both the draft cost and the expected accepted tokens, but the lesson repeatedly calls α the biggest lever. Raising acceptance from mediocre to excellent draft quality nearly doubles throughput at fixed draft length."
+    },
+    {
+      "stage": "post",
+      "question": "What two training changes define EAGLE-3 relative to earlier EAGLE versions?",
+      "options": [
+        "It adds a reward model and PPO fine-tuning",
+        "It drops direct token prediction and goes back to hidden-state matching",
+        "It trains directly on token prediction and uses training-time test so the draft consumes its own outputs during training",
+        "It removes speculative verification and samples only from the draft"
+      ],
+      "correct": 2,
+      "explanation": "EAGLE-3 abandons the feature-prediction objective that limited earlier versions. It also introduces training-time test so the draft sees the same autoregressive input distribution during training that it will face at inference."
+    },
+    {
+      "stage": "post",
+      "question": "If all N drafted tokens are accepted in one speculative step, what happens next?",
+      "options": [
+        "The verifier samples one bonus token from q_(N+1)",
+        "The draft samples one bonus token from p_(N+1)",
+        "The process stops and returns control to plain decoding",
+        "All KV cache entries are discarded and rebuilt"
+      ],
+      "correct": 0,
+      "explanation": "A full-accept step earns a \"free\" extra token from the verifier's next-position distribution. That bonus token is part of why good speculative decoding can return up to N+1 accepted tokens from one verifier forward pass."
+    },
+    {
+      "stage": "post",
+      "question": "Why does training-time test (TTT) improve EAGLE-3 drafts?",
+      "options": [
+        "It increases the verifier model's hidden size",
+        "It removes exposure bias by training the draft on its own previous predictions",
+        "It makes the draft use beam search during inference",
+        "It guarantees α = 1.0 on all tasks"
+      ],
+      "correct": 1,
+      "explanation": "Naive draft training conditions on teacher-forced histories that will not exist at inference time. TTT feeds the draft its own predictions during training so train-time and test-time state distributions align more closely."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What makes an audio-language model different from a pure ASR system?",
+      "options": ["It gives free-form natural-language answers about audio, not just transcripts", "It only works on music and environmental sounds", "It can only output speech, not text", "It replaces the need for an audio encoder"],
+      "correct": 0,
+      "explanation": "The lesson says LALMs answer prompts like semantic reasoning, music reasoning, and long-audio retrieval with one model. Pure ASR is narrower: it focuses on what was said and produces transcripts rather than broader natural-language answers."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is a projector needed between an audio encoder and an LLM in a typical audio-language model?",
+      "options": ["It maps audio features into the LLM's embedding space", "It raises the sample rate before tokenization", "It performs diarization before decoding", "It replaces the audio encoder during fine-tuning"],
+      "correct": 0,
+      "explanation": "The lesson describes the projector as the bridge between the audio encoder and the language model. Its job is to reshape or transform audio features so the LLM can consume them like token embeddings."
+    },
+    {
+      "stage": "post",
+      "question": "What benchmark weakness does the lesson highlight as a major unsolved problem for current audio-language models?",
+      "options": ["Multi-audio comparison remains near random-chance performance", "Speech transcription accuracy is below 10% on all models", "Models cannot answer any music questions at all", "Closed models refuse to process long audio clips"],
+      "correct": 0,
+      "explanation": "On MMAU-Pro, the multi-audio subset is described as damning for everyone, with scores around 22-26 percent. Since random chance on four options is 25 percent, the lesson argues that comparing two clips is still a major weakness."
+    },
+    {
+      "stage": "post",
+      "question": "What happens during Stage 1 training in the lesson's LALM recipe?",
+      "options": ["The encoder and LLM are frozen while the projector is trained on ASR or captioning data", "The speech decoder is trained first for voice output", "The LLM is fully fine-tuned on multi-audio reasoning tasks", "The audio encoder is replaced with a VAD model"],
+      "correct": 0,
+      "explanation": "The lesson breaks training into stages and says Stage 1 trains only the bridge between modalities. Encoder and LLM stay frozen while the projector learns to align audio features with the language model's token space."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, which open model is the best pick for long-audio understanding in 2026?",
+      "options": ["Audio Flamingo Next", "SALMONN", "LTU-AS", "GAMA"],
+      "correct": 0,
+      "explanation": "The Use It table explicitly labels Audio Flamingo Next as the best open model on long audio. Earlier in the lesson it is also described as the leader on LongAudioBench."
+    }
+  ]
+}

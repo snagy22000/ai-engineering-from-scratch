@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is plain self-attention unable to tell that two differently ordered sentences mean different things?",
+      "options": ["It always deletes repeated tokens", "It is permutation-invariant unless position information is added", "It only works on fixed-length sequences", "It requires a recurrent hidden state to encode meaning"],
+      "correct": 1,
+      "explanation": "The lesson says attention is order-blind: shuffling the rows of the input just shuffles the outputs the same way. Without an added positional signal, the mechanism itself has no notion of sequence order."
+    },
+    {
+      "stage": "pre",
+      "question": "What kind of extra information must a positional method provide to attention?",
+      "options": ["The exact gradient at each layer", "The optimizer state for each token", "Some signal about token position or relative distance", "A larger vocabulary embedding table"],
+      "correct": 2,
+      "explanation": "All three approaches in the lesson exist to restore order information. They do it differently, but each injects some notion of where tokens are or how far apart they are."
+    },
+    {
+      "stage": "post",
+      "question": "In the original sinusoidal approach, where is the positional signal inserted?",
+      "options": ["Added to token embeddings before the first attention layer", "Added only to the output logits", "Used only inside the feed-forward network", "Stored in the optimizer instead of the model"],
+      "correct": 0,
+      "explanation": "The sinusoidal method precomputes a positional matrix and adds it directly to the embeddings. The lesson explicitly writes X' = X + PE[:N] before attention begins."
+    },
+    {
+      "stage": "post",
+      "question": "What is the key effect of applying RoPE to queries and keys?",
+      "options": ["It makes attention scores depend only on relative distance between positions", "It removes the need for softmax", "It forces all heads to share the same projection matrix", "It turns attention into a convolution"],
+      "correct": 0,
+      "explanation": "RoPE rotates Q and K by position-dependent angles, but the resulting dot product depends on m - n rather than on the absolute positions alone. That is why the lesson describes RoPE as encoding relative position directly inside the attention score."
+    },
+    {
+      "stage": "post",
+      "question": "How does ALiBi encode position?",
+      "options": ["By appending a learned position token to the sequence", "By rotating embeddings with sinusoids", "By adding a head-specific linear distance penalty to attention scores", "By masking out every token more than one step away"],
+      "correct": 2,
+      "explanation": "ALiBi does not modify embeddings at all in this lesson's formulation. Instead, it subtracts m_h · |i - j| from attention scores, which biases heads toward closer tokens while still allowing long-context extrapolation."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why would running diffusion directly on 512x512 pixel images be expensive?",
+      "options": [
+        "Because images cannot be represented as tensors",
+        "Because every denoising step must process a very large spatial grid, so the FLOP cost explodes",
+        "Because pixel models cannot use text prompts",
+        "Because VAEs require square images"
+      ],
+      "correct": 1,
+      "explanation": "The lesson opens by calling pixel-space diffusion at 512 squared computationally absurd. A U-Net has to process hundreds of thousands of pixel values per step, so repeating that for dozens of steps becomes extremely costly."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the basic job of a VAE in latent diffusion?",
+      "options": [
+        "It converts text tokens into prompts for the U-Net",
+        "It compresses images into a smaller latent representation and later decodes them back",
+        "It replaces the diffusion model during sampling",
+        "It chooses the scheduler for inference"
+      ],
+      "correct": 1,
+      "explanation": "Latent diffusion separates image compression from denoising. The VAE encodes images into a compact latent space that preserves semantic structure, then the decoder reconstructs pixels after diffusion finishes in that latent space."
+    },
+    {
+      "stage": "post",
+      "question": "What is the central efficiency idea behind latent diffusion in the lesson?",
+      "options": [
+        "Train a different U-Net for every prompt length",
+        "Run diffusion in the VAE latent space instead of pixel space",
+        "Use the text encoder as the image decoder",
+        "Remove the reverse process entirely"
+      ],
+      "correct": 1,
+      "explanation": "The doc describes Stable Diffusion as a two-stage system: first encode images with a VAE, then run the same diffusion loss on z instead of x. Because the latent tensor is far smaller than the pixel tensor, you get dramatically lower compute for similar perceptual quality."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, how does text actually influence a Stable Diffusion U-Net?",
+      "options": [
+        "By replacing the latent with text embeddings",
+        "By modifying the beta schedule each step",
+        "Through cross-attention where image features query text tokens used as keys and values",
+        "By decoding the prompt into RGB pixels before denoising"
+      ],
+      "correct": 2,
+      "explanation": "The lesson states that text conditioning comes from a frozen text encoder plus cross-attention inside each U-Net block. Image features act as queries, and text tokens provide keys and values, which is how prompt information enters the denoising network."
+    },
+    {
+      "stage": "post",
+      "question": "How does classifier-free guidance combine conditional and unconditional predictions in the lesson's toy Stable Diffusion setup?",
+      "options": [
+        "eps_cfg = eps_cond + eps_uncond",
+        "eps_cfg = (1 + w) * eps_cond - w * eps_uncond",
+        "eps_cfg = w * eps_uncond only",
+        "eps_cfg = decode(eps_cond) - decode(eps_uncond)"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly gives the CFG formula eps_cfg = (1 + w) * eps_cond - w * eps_uncond. It also explains that raising w improves prompt adherence up to a point, but too much guidance causes saturated, brittle images."
+    }
+  ]
+}

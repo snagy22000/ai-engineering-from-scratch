@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What limitation of ordinary next-token prediction motivates multi-token prediction?",
+      "options": [
+        "It gives each position supervision for only one immediate future token",
+        "It requires a separate tokenizer per layer",
+        "It cannot be trained with cross-entropy",
+        "It prevents the use of shared embeddings"
+      ],
+      "correct": 0,
+      "explanation": "Standard autoregressive training supervises each hidden state on exactly one next token. The lesson argues that this leaves longer-range structure to be learned indirectly instead of giving denser predictive signal from the same sequence."
+    },
+    {
+      "stage": "pre",
+      "question": "Why can't Gloeckle-style parallel MTP heads be directly reused as speculative-decoding drafts?",
+      "options": [
+        "They predict from independent heads on the same hidden state without a causal chain between depths",
+        "They require a different vocabulary for each future offset",
+        "They only work with encoder-decoder models",
+        "They remove the LM head entirely"
+      ],
+      "correct": 0,
+      "explanation": "Parallel MTP predicts several offsets at once, but those predictions do not condition on each other. Without that causal chaining, the model cannot naturally roll depth-1 output into depth-2 prediction the way a speculative draft needs to."
+    },
+    {
+      "stage": "post",
+      "question": "How does DeepSeek-V3 form the hidden state for prediction depth k in sequential MTP?",
+      "options": [
+        "By averaging all previous LM heads together",
+        "By combining the previous-depth hidden state with the embedding of the next-depth token, then passing that through module k",
+        "By discarding the backbone hidden state and starting from zeros",
+        "By running a separate tokenizer over future offsets"
+      ],
+      "correct": 1,
+      "explanation": "Sequential MTP explicitly feeds forward a refined hidden state from the previous depth along with the embedding of the next token. That preserves an autoregressive-style causal chain across depths instead of making each future offset independent."
+    },
+    {
+      "stage": "post",
+      "question": "Which expression matches the lesson's joint MTP loss?",
+      "options": [
+        "L_MTP = λ × max_k L_k",
+        "L_MTP = Σ_k k × L_k with no normalization",
+        "L_MTP = (λ / D) × Σ_k L_k added on top of the main LM loss",
+        "L_MTP = CE(logits_1, logits_2) only"
+      ],
+      "correct": 2,
+      "explanation": "Each prediction depth contributes its own cross-entropy term. The lesson averages those depth losses and scales them by λ before adding the result to the usual next-token objective."
+    },
+    {
+      "stage": "post",
+      "question": "What is the two-part payoff of MTP in DeepSeek-V3?",
+      "options": [
+        "Denser training supervision and a ready-made speculative-decoding draft at inference",
+        "Smaller vocabularies and longer pre-training context",
+        "Elimination of MoE routing and DualPipe",
+        "Deterministic decoding and zero KV cache"
+      ],
+      "correct": 0,
+      "explanation": "During training, MTP gives each hidden state more than one target and improves the learning signal. At inference, the trained MTP module can be reused as a draft network, which the lesson says yields 80%+ acceptance and around 1.8x throughput gain."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does reducing curvature in the path from noise to data help a generative model sample faster?",
+      "options": [
+        "Straighter paths can be integrated accurately with far fewer numerical steps",
+        "Curved paths make neural networks impossible to train",
+        "Straight paths remove the need for any learned model",
+        "Curvature only affects training memory, not inference"
+      ],
+      "correct": 0,
+      "explanation": "The lesson motivates flow matching by contrasting curved diffusion trajectories with straighter transport paths. If the path is close to linear, a simple Euler solver can move from noise to data in only a few steps instead of dozens."
+    },
+    {
+      "stage": "pre",
+      "question": "In a diffusion-style sampler, what does the model fundamentally need in order to update a noisy sample toward data?",
+      "options": [
+        "A direction or velocity telling it how to move the current sample",
+        "A list of all training examples in memory",
+        "A nearest-neighbor search over the dataset at every step",
+        "A second decoder that converts text straight into pixels"
+      ],
+      "correct": 0,
+      "explanation": "Before the lesson-specific details, the core intuition is that iterative generation needs an update direction at each state. Flow matching makes that direction explicit by training a vector field v_theta(x, t) to point along the transport path."
+    },
+    {
+      "stage": "post",
+      "question": "What target does conditional flow matching regress against along the straight-line interpolant x_t = t x_1 + (1-t) x_0?",
+      "options": [
+        "The denoised sample x_0 itself",
+        "The constant velocity x_1 - x_0",
+        "The covariance matrix of the dataset",
+        "The classifier-free guidance weight"
+      ],
+      "correct": 1,
+      "explanation": "The lesson defines the straight-line path between noise x_1 and data x_0, then differentiates it to get dx_t/dt = x_1 - x_0. Training is simply mean-squared regression of the learned vector field onto that velocity target."
+    },
+    {
+      "stage": "post",
+      "question": "Why is flow-matching training described as simulation-free in the lesson?",
+      "options": [
+        "Because it never requires a neural network",
+        "Because training directly samples (x_0, x_1, t) and regresses a velocity target without unrolling the ODE",
+        "Because inference uses only one step",
+        "Because it uses a lookup table instead of gradient descent"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly notes that you do not simulate the trajectory during training. You just sample endpoints and a time t, form x_t analytically, and fit the model to the corresponding target velocity."
+    },
+    {
+      "stage": "post",
+      "question": "What is the purpose of rectified flow's reflow procedure?",
+      "options": [
+        "To generate text captions for training images",
+        "To convert the model into a GAN discriminator",
+        "To iteratively create ODE-matched pairs that make the learned trajectories flatter and easier to sample in 1-4 steps",
+        "To replace Euler integration with beam search"
+      ],
+      "correct": 2,
+      "explanation": "Rectified flow trains an initial model, uses it to produce matched start-end pairs, and then retrains on those pairs. The lesson says this iterative straightening makes the ODE closer to linear, enabling high-quality 2-4 step inference."
+    }
+  ]
+}

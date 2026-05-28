@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can a single self-attention head be limiting?",
+      "options": ["It can only process one token in the whole sequence", "It forces keys and values to come from different models", "It compresses many possible relationships into one attention pattern", "It prevents the use of softmax"],
+      "correct": 2,
+      "explanation": "A single head produces one attention matrix, so different signals like syntax, co-reference, and copying get mixed together. The lesson frames multi-head attention as a way to give separate relations separate representational space."
+    },
+    {
+      "stage": "pre",
+      "question": "If d_model is split evenly across more heads, what happens to each head's width?",
+      "options": ["It stays equal to d_model", "It becomes d_model divided by the number of heads", "It doubles with every added head", "It is unrelated to d_model"],
+      "correct": 1,
+      "explanation": "The lesson defines d_head as d_model / n_heads. Adding more heads therefore makes each individual head operate on a smaller subspace."
+    },
+    {
+      "stage": "post",
+      "question": "What is the role of the output matrix W_o in multi-head attention?",
+      "options": ["It creates the causal mask", "It mixes the concatenated head outputs back into a d_model-sized representation", "It replaces the value projection entirely", "It normalizes each head to unit length"],
+      "correct": 1,
+      "explanation": "After each head computes its own output, those outputs are concatenated. W_o is the learned projection that recombines them, and the lesson explicitly notes that this is where heads get to mix."
+    },
+    {
+      "stage": "post",
+      "question": "How does Grouped-Query Attention reduce inference-time KV-cache memory?",
+      "options": ["By removing query heads and keeping only one big key head", "By shrinking sequence length before attention", "By using fewer key/value heads than query heads and repeating them to match", "By storing only the output projection in the cache"],
+      "correct": 2,
+      "explanation": "GQA keeps many query heads but uses a smaller number of KV heads. Because only those fewer K/V projections must live in the cache, memory drops while the repeated heads still serve all queries."
+    },
+    {
+      "stage": "post",
+      "question": "What d_head values does the lesson describe as the usual production range?",
+      "options": ["8 or 16", "32 or 48", "64 or 128", "256 or 512"],
+      "correct": 2,
+      "explanation": "The lesson's rules of thumb say production models almost always land at d_head values of 64 or 128. That range keeps each head expressive without losing the benefit of having many specialized heads."
+    }
+  ]
+}

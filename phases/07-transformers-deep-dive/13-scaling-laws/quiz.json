@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "If training compute is roughly fixed at C = 6ND, what happens when you increase model parameters N a lot without raising compute?",
+      "options": [
+        "You must usually train on fewer tokens D",
+        "You automatically lower inference cost",
+        "You increase both N and D together for free",
+        "You remove the irreducible loss term E"
+      ],
+      "correct": 0,
+      "explanation": "With compute budget held fixed, parameters and tokens trade off against each other. Pushing N upward means D has to come down, which is exactly the tension the scaling-laws lesson analyzes."
+    },
+    {
+      "stage": "pre",
+      "question": "Why can benchmark abilities appear to \u201cemerge\u201d suddenly even when the underlying model improves smoothly?",
+      "options": [
+        "Because transformers only learn after 1 trillion tokens",
+        "Because exact-match or thresholded metrics can hide gradual logit improvements",
+        "Because scaling laws stop applying beyond 10B parameters",
+        "Because post-training destroys smooth pretraining trends"
+      ],
+      "correct": 1,
+      "explanation": "The lesson notes that discontinuous scoring rules can turn smooth changes in probability into abrupt-looking jumps in accuracy. That is why continuous metrics like cross-entropy are considered more reliable for forecasting."
+    },
+    {
+      "stage": "post",
+      "question": "What token-to-parameter ratio did Hoffmann et al. find to be compute-optimal for pretraining?",
+      "options": [
+        "About 2 tokens per parameter",
+        "About 20 tokens per parameter",
+        "About 200 tokens per parameter",
+        "About 2,000 tokens per parameter"
+      ],
+      "correct": 1,
+      "explanation": "Chinchilla showed that the compute-optimal frontier is near D/N \u2248 20 rather than the much lower ratio used by GPT-3. The lesson uses that result to explain why GPT-3 was undertrained for its size."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson say 2026 systems often over-train smaller models past Chinchilla-optimal?",
+      "options": [
+        "Because training FLOPs dominate total cost forever",
+        "Because smaller models cannot use post-training",
+        "Because inference cost matters more for heavily deployed models, so longer training can be worth it",
+        "Because over-training eliminates the need for data curation"
+      ],
+      "correct": 2,
+      "explanation": "Chinchilla optimizes loss per training FLOP, but production systems often care more about serving cost than one-time training cost. Training a smaller model on many more tokens can keep quality high while greatly reducing latency and inference spend."
+    },
+    {
+      "stage": "post",
+      "question": "In the Hoffmann scaling-law equation L(N, D) = A / N^\u03b1 + B / D^\u03b2 + E, what does E represent?",
+      "options": [
+        "The optimizer learning rate",
+        "The irreducible loss floor of the data distribution",
+        "The embedding-parameter penalty",
+        "The number of epochs needed for convergence"
+      ],
+      "correct": 1,
+      "explanation": "E is the asymptotic floor you cannot beat just by scaling parameters or tokens. The lesson describes it as the irreducible loss ceiling or entropy of the data itself."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is evaluating a generative model harder than evaluating a standard classifier?",
+      "options": [
+        "Because there is no single ground-truth output for each prompt, so quality and prompt adherence must be estimated indirectly",
+        "Because generative models cannot produce numeric outputs",
+        "Because classifiers never require held-out datasets",
+        "Because all generative metrics are exact and architecture-independent"
+      ],
+      "correct": 0,
+      "explanation": "The lesson frames the evaluation problem around sample quality and conditioning adherence, neither of which has a closed-form answer. Since many different images can be acceptable for one prompt, you need proxy metrics and preference judgments instead of a simple accuracy target."
+    },
+    {
+      "stage": "pre",
+      "question": "If you only measured text-image similarity for a text-to-image model, what important aspect could you still miss?",
+      "options": [
+        "Whether the generated distribution actually looks realistic or diverse overall",
+        "Whether prompts contain nouns",
+        "Whether the model used a VAE during training",
+        "Whether the GPU batch size was large enough"
+      ],
+      "correct": 0,
+      "explanation": "A prompt-adherence score can tell you whether images align with their text, but not whether samples are high-quality or match the real image distribution. The lesson therefore separates sample-quality metrics like FID from adherence metrics like CLIP score."
+    },
+    {
+      "stage": "post",
+      "question": "What does FID compute according to the lesson?",
+      "options": [
+        "A Fr\u00e9chet distance between Gaussian fits to real and generated feature distributions in Inception space",
+        "The exact pixel-wise MSE between real and generated images",
+        "An Elo score from pairwise human votes",
+        "The cosine similarity between prompt and image embeddings"
+      ],
+      "correct": 0,
+      "explanation": "The FID section describes extracting Inception-v3 features, fitting a Gaussian to real and generated pools, and measuring their Fr\u00e9chet distance. Lower FID means the generated feature distribution is closer to the real one in that feature space."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson insist on using at least about 10,000 samples when reporting FID?",
+      "options": [
+        "Because FID becomes undefined above 10,000 samples",
+        "Because Inception features only exist for datasets of that size",
+        "Because small sample sizes underestimate covariance and can produce falsely optimistic FID values",
+        "Because CLIP score cannot be computed on smaller runs"
+      ],
+      "correct": 2,
+      "explanation": "One of the main failure modes listed for FID is small-N bias. With too few samples, covariance estimates are poor and the score can look artificially low, making weak models appear stronger than they are."
+    },
+    {
+      "stage": "post",
+      "question": "What evaluation practice does the lesson recommend instead of trusting any single metric alone?",
+      "options": [
+        "Report only the best seed and the lowest FID",
+        "Use FID, an adherence metric such as CLIP score or CMMD, blinded preference testing, and qualitative failure analysis together",
+        "Replace all human review with GPT-4 judging",
+        "Compare models only on prompts they likely saw during training"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly says any single metric is a lie. A credible report combines sample-quality measurement, prompt-adherence measurement, pairwise preference testing, and direct inspection of failure modes so that one metric's blind spots are covered by the others."
+    }
+  ]
+}

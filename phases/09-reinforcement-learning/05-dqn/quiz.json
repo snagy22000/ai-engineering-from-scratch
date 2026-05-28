@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does tabular Q-learning become impractical in environments like chess or Atari?",
+      "options": [
+        "Because it needs a separate value for every state-action pair, and the number of states explodes",
+        "Because Q-learning only works when rewards are always positive",
+        "Because neural networks cannot process board states or images",
+        "Because exploration is impossible once the state space is large"
+      ],
+      "correct": 0,
+      "explanation": "The lesson says tabular Q-learning needs a distinct Q-value for each (state, action) pair. That works for tiny problems, but fails when the number of states reaches millions, billions, or far beyond, as in chess or raw-pixel Atari."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the main risk of training directly on successive RL observations with a neural network?",
+      "options": [
+        "The gradients become decorrelated too much to learn",
+        "Successive samples are highly correlated, which can destabilize learning",
+        "The network can only learn deterministic policies",
+        "The Bellman equation stops applying to sequential data"
+      ],
+      "correct": 1,
+      "explanation": "The lesson emphasizes that consecutive transitions in RL are strongly correlated, especially in settings like Atari where adjacent frames look almost identical. Feeding those directly into a neural learner can make updates unstable and is one reason naive deep Q-learning diverges."
+    },
+    {
+      "stage": "post",
+      "question": "In DQN, what is the main purpose of the target network?",
+      "options": [
+        "To explore more aggressively with epsilon-greedy actions",
+        "To provide a frozen bootstrap target that changes only periodically",
+        "To store old transitions for replay",
+        "To clip rewards into the range {-1,0,+1}"
+      ],
+      "correct": 1,
+      "explanation": "The target network keeps a separate copy of the Q-function weights for computing Bellman targets. By freezing that network for many steps and only syncing periodically, DQN avoids the 'chasing your own tail' instability of using the same moving network on both sides of the target."
+    },
+    {
+      "stage": "post",
+      "question": "How does Double DQN reduce maximization bias?",
+      "options": [
+        "It averages rewards across two replay buffers",
+        "It uses the target network to select the action and the online network to evaluate it",
+        "It uses the online network to select the action and the target network to evaluate it",
+        "It removes the max operator from the Bellman target entirely"
+      ],
+      "correct": 2,
+      "explanation": "The lesson states that Double DQN uses the online network to choose the argmax action, then uses the target network to score that chosen action. This separates action selection from action evaluation, which reduces the upward bias caused by taking a max over noisy estimates."
+    },
+    {
+      "stage": "post",
+      "question": "Which combination is identified as the core stabilizing foundation of DQN?",
+      "options": [
+        "Replay buffer, target network, and reward clipping",
+        "Entropy bonus, GAE, and KL penalty",
+        "Actor, critic, and importance sampling",
+        "Frame stacking, dueling heads, and noisy networks"
+      ],
+      "correct": 0,
+      "explanation": "The lesson repeatedly highlights three engineering tricks as DQN's base: experience replay, a target network, and reward clipping. Later improvements like prioritized replay or dueling networks build on top of that original stabilizing recipe."
+    }
+  ]
+}

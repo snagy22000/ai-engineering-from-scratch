@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What problem do residual connections like x + f(x) primarily help with in deep networks?",
+      "options": ["They force the model to use fewer parameters", "They improve gradient flow so deep stacks train more reliably", "They remove the need for normalization", "They make attention causal automatically"],
+      "correct": 1,
+      "explanation": "Residual connections create a direct path for information and gradients to travel through many layers. That is why the lesson says depth breaks without the right plumbing and lists residuals as one of the key pieces."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the broad role of the feed-forward network inside a transformer block?",
+      "options": ["It performs a position-wise nonlinear transformation after attention", "It replaces embeddings with one-hot vectors", "It computes the causal mask", "It shares parameters across the entire dataset"],
+      "correct": 0,
+      "explanation": "The FFN is described as a two-layer MLP applied position-wise. It adds nonlinear capacity after attention rather than changing which tokens can attend to which others."
+    },
+    {
+      "stage": "post",
+      "question": "Which sublayer appears only in the decoder of an encoder-decoder transformer and carries encoder information into it?",
+      "options": ["Masked self-attention", "Cross-attention", "RMSNorm", "Embedding lookup"],
+      "correct": 1,
+      "explanation": "The lesson says cross-attention is the only place information flows from encoder to decoder. In that sublayer, the decoder provides queries while the encoder output supplies keys and values."
+    },
+    {
+      "stage": "post",
+      "question": "Why is pre-norm the 2026 default over post-norm?",
+      "options": ["It makes the model bidirectional by default", "It trains deep stacks more stably without careful warmup gymnastics", "It removes the feed-forward network entirely", "It doubles the effective context length"],
+      "correct": 1,
+      "explanation": "Pre-norm applies normalization before each sublayer, written as x + sublayer(LN(x)). The lesson notes that post-norm became harder to train deeply, while pre-norm is what modern models like Llama and Qwen use."
+    },
+    {
+      "stage": "post",
+      "question": "Which set of components best matches the lesson's modernized 2026 transformer block?",
+      "options": ["LayerNorm, ReLU, learned absolute positions, full MHA only", "BatchNorm, convolution, no residuals, no positional signal", "RMSNorm, SwiGLU, RoPE, and often GQA or MLA", "LSTM cells, max pooling, and sinusoidal outputs"],
+      "correct": 2,
+      "explanation": "The comparison table explicitly contrasts the 2017 block with the 2026 version. Modern stacks swap in RMSNorm, SwiGLU, RoPE, and newer attention variants like GQA or MLA while keeping the same overall skeleton."
+    }
+  ]
+}

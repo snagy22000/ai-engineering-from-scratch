@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is full text-to-image generation a poor tool for fixing only one small region of an existing photo?",
+      "options": [
+        "Because diffusion cannot generate realistic images",
+        "Because regenerating the whole image may change lighting, composition, and identity outside the intended edit region",
+        "Because text prompts only work on masks",
+        "Because VAEs cannot decode edited images"
+      ],
+      "correct": 1,
+      "explanation": "The lesson motivates inpainting with a client photo that should stay mostly untouched except for one distracting sign. If you regenerate everything from scratch, you lose the original camera angle, lighting, and other details that should remain fixed."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the intuitive difference between inpainting and outpainting?",
+      "options": [
+        "Inpainting edits audio while outpainting edits video",
+        "Inpainting fills inside a selected region, while outpainting extends or fills outside the preserved region",
+        "Inpainting uses transformers and outpainting uses CNNs",
+        "There is no real difference"
+      ],
+      "correct": 1,
+      "explanation": "The doc defines inpainting as regenerating inside a mask and outpainting as regenerating outside it or beyond the current canvas. They use the same core idea, but the preserved and regenerated regions are inverted."
+    },
+    {
+      "stage": "post",
+      "question": "What extra inputs does a proper diffusion inpainting model receive compared with a normal 4-channel latent diffusion U-Net?",
+      "options": [
+        "Only a higher CFG scale",
+        "The encoded source image and a mask, producing a 9-channel input together with the noisy latent",
+        "An extra video stream",
+        "A second VAE decoder"
+      ],
+      "correct": 1,
+      "explanation": "The lesson says a proper inpainting U-Net concatenates noisy latent (4 channels), encoded image (4 channels), and mask (1 channel). That lets the model directly see the surrounding visual context instead of relying on a brittle reinjection hack at each step."
+    },
+    {
+      "stage": "post",
+      "question": "How does SDEdit trade off fidelity to the source image versus creative change?",
+      "options": [
+        "By changing the VAE scaling factor",
+        "By choosing how much noise to add before reversing: lower t keeps more of the source, higher t allows larger edits",
+        "By swapping between CLIP and T5",
+        "By turning masks into prompts"
+      ],
+      "correct": 1,
+      "explanation": "SDEdit starts from a noised version of the source image and then denoises under a new prompt. The lesson gives examples showing that lower t over T keeps the result close to the source, while higher t erases more structure and gives the model greater freedom."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson warn that the naive mask-clamping approach often creates seams?",
+      "options": [
+        "Because the model never sees any prompt tokens",
+        "Because the scheduler becomes deterministic",
+        "Because the model lacks explicit masked-region context, so coherence across the mask boundary is weak",
+        "Because outpainting requires a different loss function"
+      ],
+      "correct": 2,
+      "explanation": "The naive method repeatedly reinjects the unmasked area but does not give the network rich information about the masked region itself. The lesson says this causes visible boundary artifacts, which is why proper 9-channel inpainting models or techniques like mask dilation and RePaint are used."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In a sequential decision problem like GridWorld or chess, what is the main role of a reward signal?",
+      "options": [
+        "It tells the agent how desirable outcomes are so behavior can be improved over time",
+        "It lists all legal actions in each state",
+        "It guarantees the environment is deterministic",
+        "It replaces the need for a policy"
+      ],
+      "correct": 0,
+      "explanation": "Reinforcement learning uses scalar rewards to indicate how good outcomes are, such as winning a game or earning profit. The lesson frames rewards as the signal that replaces labeled targets from supervised learning and drives policy improvement."
+    },
+    {
+      "stage": "pre",
+      "question": "If an agent needs information from several past observations to act well, what is the most likely issue?",
+      "options": [
+        "The state representation is incomplete and may violate the Markov property",
+        "The discount factor must be exactly 1",
+        "The action space is too small",
+        "The reward scale is always wrong"
+      ],
+      "correct": 0,
+      "explanation": "The lesson says the future should depend only on the present state, not the full history. If past observations are still needed, the problem is usually that the chosen state is not Markovian enough."
+    },
+    {
+      "stage": "post",
+      "question": "Which five components define the MDP used throughout the lesson?",
+      "options": [
+        "States, actions, transitions, rewards, and a discount factor",
+        "States, labels, gradients, epochs, and actions",
+        "Observations, losses, logits, prompts, and updates",
+        "States, actions, terminals, optimizers, and batches"
+      ],
+      "correct": 0,
+      "explanation": "The lesson explicitly defines an MDP as the tuple (S, A, P, R, gamma). Those five objects are presented as the common structure behind control, games, inventory, and LLM RL."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, what is the effective planning horizon when gamma = 0.99?",
+      "options": [
+        "About 10 steps",
+        "About 50 steps",
+        "About 100 steps",
+        "About 1000 steps"
+      ],
+      "correct": 2,
+      "explanation": "The lesson gives the rule of thumb that effective horizon is roughly 1 / (1 - gamma). Plugging in gamma = 0.99 gives about 100 steps, which is why larger gamma makes the agent care more about distant consequences."
+    },
+    {
+      "stage": "post",
+      "question": "Why is using gamma = 1 on an infinite-horizon task dangerous, according to the lesson?",
+      "options": [
+        "It makes exploration impossible",
+        "It can make values infinite unless there is a finite horizon or some other cap",
+        "It forces rewards to be negative",
+        "It guarantees the optimal policy is random"
+      ],
+      "correct": 1,
+      "explanation": "The pitfalls section warns that gamma = 1 on an infinite-horizon task can make every value infinite. The lesson recommends either a finite horizon or gamma < 1 to keep the return well-defined."
+    }
+  ]
+}

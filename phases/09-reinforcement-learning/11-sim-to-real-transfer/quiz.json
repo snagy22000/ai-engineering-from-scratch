@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is simulation so attractive for training robot policies?",
+      "options": [
+        "It perfectly matches the real world",
+        "It gives cheap resets, safe failures, and massive parallel experience",
+        "It removes the need for observations",
+        "It guarantees zero-shot transfer automatically"
+      ],
+      "correct": 1,
+      "explanation": "The lesson opens by contrasting real robots, which are slow and fragile, with simulation, which is cheap, reproducible, and safe. Those properties make RL feasible at the scale needed for locomotion and manipulation."
+    },
+    {
+      "stage": "pre",
+      "question": "What does the term reality gap mean in sim-to-real work?",
+      "options": [
+        "The difference between training and deployment distributions in physics or sensing",
+        "The gap between two reward models",
+        "The delay between policy updates",
+        "The amount of GPU memory used by the simulator"
+      ],
+      "correct": 0,
+      "explanation": "The doc defines the reality gap as the systematic mismatch between what the simulator produces and what happens on hardware. This can come from friction, delays, vision artifacts, and many other deployment differences."
+    },
+    {
+      "stage": "post",
+      "question": "What is domain randomization in the lesson's sim-to-real recipe?",
+      "options": [
+        "Freezing simulator parameters to one carefully measured setting",
+        "Randomizing simulator parameters during training so the policy generalizes across possible real-world conditions",
+        "Replacing the policy with a model-predictive controller",
+        "Training only on real hardware with no simulator"
+      ],
+      "correct": 1,
+      "explanation": "Domain randomization exposes the policy to varied masses, friction, gains, lighting, noise, and other factors during training. The idea is that if reality falls inside that envelope, the learned controller can transfer robustly."
+    },
+    {
+      "stage": "post",
+      "question": "What is the main tradeoff of over-randomizing the simulator?",
+      "options": [
+        "The policy becomes overly cautious and underperforms because training adds too much noise",
+        "The simulator becomes perfectly realistic",
+        "The need for safety limits disappears",
+        "System identification becomes impossible in principle"
+      ],
+      "correct": 0,
+      "explanation": "The lesson warns that too much randomization acts like excessive regularization. Instead of learning a sharp, effective controller, the policy may become universal but timid because every episode feels highly uncertain."
+    },
+    {
+      "stage": "post",
+      "question": "In the teacher-student setup described for sim-to-real, what advantage does the teacher have?",
+      "options": [
+        "It trains only on real sensor readings",
+        "It can use privileged simulator information unavailable at deployment",
+        "It uses a smaller network than the student",
+        "It never needs domain randomization"
+      ],
+      "correct": 1,
+      "explanation": "The teacher can access simulator-only signals such as terrain height or true friction, which help it learn strong behavior. The student is then distilled to act from realistic observations, learning to infer what the teacher knew implicitly."
+    }
+  ]
+}

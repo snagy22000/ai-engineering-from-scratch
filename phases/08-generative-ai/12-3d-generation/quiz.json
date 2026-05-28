@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is 3D generation generally harder than ordinary image generation?",
+      "options": [
+        "Because 3D scenes usually require recovering geometry from sparse 2D views and much heavier representations",
+        "Because 3D models never use neural networks",
+        "Because 3D data is always easier to label than 2D data",
+        "Because voxel grids are smaller than images at the same resolution"
+      ],
+      "correct": 0,
+      "explanation": "The lesson emphasizes three difficulties: scarce clean 3D data, heavy memory costs, and weak supervision from only a few views. Unlike 2D images, you often have to infer full geometry from limited camera observations."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the practical advantage of generating several views of an object before fitting a 3D representation?",
+      "options": [
+        "It removes the need for any 3D reconstruction step",
+        "It gives consistent evidence from multiple angles, which makes lifting to 3D more reliable than guessing from one view alone",
+        "It guarantees the back side is always exact",
+        "It converts all outputs directly into game-ready PBR materials"
+      ],
+      "correct": 1,
+      "explanation": "The stack described in the lesson separates multi-view image generation from 3D reconstruction. Generating several views first provides more geometric constraints, reducing the amount of hallucination required compared with single-image lifting."
+    },
+    {
+      "stage": "post",
+      "question": "How does 3D Gaussian Splatting represent a scene in the lesson?",
+      "options": [
+        "As a voxel grid of binary occupied cells",
+        "As a cloud of roughly a million 3D Gaussians with parameters for location, shape, opacity, and color",
+        "As a single triangle mesh with no texture information",
+        "As a language-model prompt that is rendered by a game engine"
+      ],
+      "correct": 1,
+      "explanation": "The representation section describes a scene as a cloud of 3D Gaussians, each carrying position, covariance, opacity, and spherical-harmonic color information. Rendering is done by projection and alpha-compositing, which is why the method is both differentiable and fast."
+    },
+    {
+      "stage": "post",
+      "question": "What pipeline does the lesson describe as the strongest general recipe for text-to-3D in 2025-2026?",
+      "options": [
+        "Train a new NeRF from scratch for every prompt with no image intermediate",
+        "Generate consistent multi-view images with diffusion, then reconstruct a 3D object or scene from those views",
+        "Predict every mesh triangle directly in raster order",
+        "Upsample a single thumbnail into a full textured mesh with nearest-neighbor interpolation"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly says the modern stack splits the problem into two stages: multi-view diffusion followed by fitting a 3D representation. It also notes that this intermediate remains the best-performing recipe for general objects even as direct text-to-mesh improves."
+    },
+    {
+      "stage": "post",
+      "question": "Which failure mode is specifically called out when generating 4 views independently before reconstruction?",
+      "options": [
+        "The model becomes unable to render at real-time speeds",
+        "The object disappears because all views are identical",
+        "View inconsistency can make the reconstructed 3D fit blurry because the object structure disagrees across views",
+        "The Gaussian splat representation stops being differentiable"
+      ],
+      "correct": 2,
+      "explanation": "One pitfall warns that independently generated views may disagree about the object structure. When the views conflict, the 3D fit averages incompatible evidence and the result becomes blurry, which is why shared-attention multi-view generation matters."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is traditional RLHF expensive to scale for frontier models?",
+      "options": [
+        "It requires training only on CPU clusters",
+        "It depends on large volumes of human preference comparisons",
+        "It cannot use supervised fine-tuning at all",
+        "It forces every model to use a separate tokenizer"
+      ],
+      "correct": 1,
+      "explanation": "RLHF needs humans to compare model outputs, and those comparisons are slow and expensive to collect. The lesson contrasts tens of thousands to millions of human preference pairs with cheaper self-generated or rule-based signals."
+    },
+    {
+      "stage": "pre",
+      "question": "Which tasks are the best fit for rule-based reinforcement learning instead of human preference labels?",
+      "options": [
+        "Tasks where style is purely subjective",
+        "Tasks with no measurable success criterion",
+        "Tasks with verifiable outcomes like math, code, or regex-constrained formatting",
+        "Tasks where the model must invent its own vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "Rule-based RL works when correctness can be checked mechanically. The lesson gives math answers, test-suite pass/fail, formatting constraints, and proof assistants as examples of cheap deterministic rewards."
+    },
+    {
+      "stage": "post",
+      "question": "In Stage 1 of Constitutional AI (SL-CAI), what data is used for supervised fine-tuning?",
+      "options": [
+        "Pairs of prompts and revised responses produced after self-critique",
+        "Only the constitution text by itself",
+        "Raw prompts with no model responses attached",
+        "Human-written reward scores for every token"
+      ],
+      "correct": 0,
+      "explanation": "SL-CAI starts with an SFT model, has it critique its own answer against a principle, then revise the answer. The training dataset is the prompt paired with that revised response, not the original harmful answer."
+    },
+    {
+      "stage": "post",
+      "question": "How does GRPO remove PPO's separate value-function critic?",
+      "options": [
+        "By replacing all rewards with human-written constitutions",
+        "By normalizing rewards within a group of sampled responses for the same prompt",
+        "By sampling only one response per prompt",
+        "By removing the KL term against the reference model"
+      ],
+      "correct": 1,
+      "explanation": "GRPO samples a group of responses and turns each reward into a z-score relative to the group mean and standard deviation. That group-relative normalization provides the baseline signal that PPO would otherwise learn with a separate value network."
+    },
+    {
+      "stage": "post",
+      "question": "What is the main failure mode of repeated self-improvement loops, and how do production pipelines usually counter it?",
+      "options": [
+        "Mode collapse into narrow, formulaic outputs; mix in fresh human data",
+        "Tokenizer drift; rebuild the BPE vocabulary every epoch",
+        "Exploding gradients; freeze the attention layers permanently",
+        "Overlong contexts; force every response under 32 tokens"
+      ],
+      "correct": 0,
+      "explanation": "The lesson warns that self-generated data narrows the model's output distribution over repeated rounds. Teams usually mix a small fraction of fresh human data back in to preserve diversity and correct blind spots."
+    }
+  ]
+}

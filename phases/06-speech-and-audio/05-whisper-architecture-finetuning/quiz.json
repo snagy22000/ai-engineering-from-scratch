@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a fixed-context sequence model usually need chunking for very long audio?",
+      "options": ["Because audio above 16 kHz cannot be tokenized", "Because the model can only process a bounded input window at once", "Because decoder prompts only work on clips under 1 second", "Because transformers require stereo channels"],
+      "correct": 1,
+      "explanation": "The lesson centers Whisper around a hard 30-second window. If the input is longer than that, you cannot feed the whole clip at once and must split it into chunks or use a long-form wrapper."
+    },
+    {
+      "stage": "pre",
+      "question": "In a standard encoder-decoder transformer, what is the decoder using cross-attention for?",
+      "options": ["To look at encoder representations while generating output tokens", "To increase the sample rate of the waveform", "To compute cosine similarity between speakers", "To replace tokenization with MFCCs"],
+      "correct": 0,
+      "explanation": "The lesson assumes the reader already knows the basic encoder-decoder pattern. Cross-attention lets the decoder condition each generated token on the encoded audio features rather than only on prior output tokens."
+    },
+    {
+      "stage": "post",
+      "question": "What input format does the lesson say Whisper expects before encoding?",
+      "options": ["A 60-second raw waveform with 128 mel bins", "A 30-second log-mel spectrogram with 80 mels and about 3000 frames", "A 10-second MFCC matrix with 13 coefficients", "A variable-length spectrogram with no padding or chunking"],
+      "correct": 1,
+      "explanation": "The lesson states Whisper takes a 30-second 80-mel input, which at a 10 ms hop is about 3000 frames. Shorter clips are padded and longer clips are chunked to fit that fixed window."
+    },
+    {
+      "stage": "post",
+      "question": "What is the main role of special prompt tokens such as <|en|>, <|transcribe|>, and <|notimestamps|> in Whisper?",
+      "options": ["They quantize the audio before feature extraction", "They steer language, task, and timestamp behavior in the decoder prompt", "They replace the tokenizer during fine-tuning", "They normalize mel statistics at inference time"],
+      "correct": 1,
+      "explanation": "The lesson describes Whisper as a multitask model controlled by prompt tokens. Those tokens tell the decoder which language to use, whether to transcribe or translate, and whether timestamp tokens should be produced."
+    },
+    {
+      "stage": "post",
+      "question": "Which fine-tuning practice matches the lesson's 2026 workflow for Whisper?",
+      "options": ["Swap in a custom tokenizer and retrain the frontend first", "Use LoRA on attention projections, keep Whisper's own preprocessing, and freeze the encoder when data is very limited", "Always fine-tune every parameter even for 2 hours of data", "Use librosa mel features because they are interchangeable with Whisper's"],
+      "correct": 1,
+      "explanation": "The lesson recommends parameter-efficient tuning with LoRA on attention layers and warns never to swap out Whisper's tokenizer or frontend. It also says to freeze the encoder when you have less than about 10 hours of data, because small-domain datasets cannot support a full update safely."
+    }
+  ]
+}

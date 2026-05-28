@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is speech often converted into a spectrogram-like representation before a transformer processes it?",
+      "options": ["Because transformers can only read JPEG files", "Because it turns raw waveform samples into a time-frequency representation the model can treat like a sequence or image", "Because it eliminates the need for tokenization on the output side", "Because it guarantees perfect speaker diarization"],
+      "correct": 1,
+      "explanation": "A spectrogram organizes audio energy across time and frequency, which is much easier for a model to learn from than raw samples alone. The lesson frames Whisper's log-mel features as an audio image that the transformer encoder can consume."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is encoder-decoder a natural architecture for speech-to-text?",
+      "options": ["Because both the input and output are identical text sequences", "Because the encoder can model audio features while the decoder generates text tokens", "Because speech recognition never uses autoregressive decoding", "Because it avoids any need for attention"],
+      "correct": 1,
+      "explanation": "Speech-to-text has different source and target modalities, so separating understanding from generation is a clean fit. The encoder processes audio representations, while the decoder autoregressively produces text tokens conditioned on that audio context."
+    },
+    {
+      "stage": "post",
+      "question": "What do Whisper's decoder prompt tokens like <|en|> and <|transcribe|> control?",
+      "options": ["They choose the optimizer and learning rate", "They specify language and task behavior for the decoder", "They encode speaker identity for diarization", "They replace the need for timestamps in the output"],
+      "correct": 1,
+      "explanation": "The lesson shows Whisper starting decoding with control tokens such as <|startoftranscript|>, a language token, and a task token. That prefix tells the model whether to transcribe or translate and which language setting to use."
+    },
+    {
+      "stage": "post",
+      "question": "After the convolutional stem, what happens to Whisper's ~3,000 input frames according to the lesson?",
+      "options": ["They are expanded to 6,000 frames for higher resolution", "They are reduced to about 1,500 frames before the transformer encoder", "They are compressed into a single [CLS] token", "They are converted directly into word-level timestamps"],
+      "correct": 1,
+      "explanation": "Whisper uses two Conv1D layers with stride 2 in the front end to shorten the time dimension. The lesson states this reduces roughly 3,000 spectrogram frames to about 1,500, making encoder attention cheaper."
+    },
+    {
+      "stage": "post",
+      "question": "Which capability does the lesson say Whisper does NOT provide natively?",
+      "options": ["Multilingual transcription", "Translation with task tokens", "Speaker diarization", "Beam-search decoding"],
+      "correct": 2,
+      "explanation": "The lesson explicitly says Whisper does not perform diarization, so you pair it with a tool like pyannote when you need speaker labels. It also notes that native real-time streaming is not built in, but multilingual transcription and translation are core Whisper features."
+    }
+  ]
+}

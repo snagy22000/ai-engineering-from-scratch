@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which kind of task most naturally fits an encoder-decoder transformer?",
+      "options": ["Open-ended chat with no fixed source sequence", "Input-to-output tasks like translation or summarization", "Image classification with a single label", "Routing tokens across experts in a sparse FFN"],
+      "correct": 1,
+      "explanation": "Encoder-decoder models are built for cases where there is a clear source sequence and a distinct target sequence. Tasks like translation, summarization, and structured extraction match that pattern directly."
+    },
+    {
+      "stage": "pre",
+      "question": "In an encoder-decoder model, what is cross-attention for?",
+      "options": ["It lets encoder tokens attend only to earlier encoder tokens", "It lets the decoder use encoder representations while generating the output", "It replaces the feed-forward network inside each block", "It shares the same positional embeddings between source and target"],
+      "correct": 1,
+      "explanation": "Cross-attention is the path through which information from the source enters the decoder. The decoder queries the encoder's hidden states at every generation step so output tokens can stay grounded in the input."
+    },
+    {
+      "stage": "post",
+      "question": "How does T5's span-corruption objective format the target sequence?",
+      "options": ["It reconstructs the entire original source sequence token by token", "It outputs only the masked spans, each prefixed by its sentinel token", "It predicts the next token over the uncorrupted input only", "It sorts the masked spans alphabetically before decoding"],
+      "correct": 1,
+      "explanation": "The lesson's T5 example replaces corrupted spans in the source with sentinels like <extra_id_0> and <extra_id_1>. The decoder target contains just the missing spans, tagged with the same sentinels, which is cheaper than reconstructing the full sequence."
+    },
+    {
+      "stage": "post",
+      "question": "What distinguishes BART pretraining from T5 pretraining in this lesson?",
+      "options": ["BART uses noising like masking and sentence permutation, then reconstructs the full original sequence", "BART predicts only corrupted spans and never sees the clean sequence", "BART removes the decoder and uses only an encoder", "BART trains with contrastive image-text loss instead of language modeling"],
+      "correct": 0,
+      "explanation": "BART is presented as a denoising autoencoder that corrupts the input with several noise functions and asks the decoder to recover the full clean text. T5 instead uses span corruption and has the decoder output only the masked spans with sentinel prefixes."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson's 2026 guidance, when does encoder-decoder still have a clear advantage?",
+      "options": ["For chat and general reasoning because RLHF requires two stacks", "When input modality differs from output, such as speech-to-text in Whisper", "For long-context code completion because beam search is mandatory", "For edge deployment because two stacks always use less memory than one"],
+      "correct": 1,
+      "explanation": "The lesson says decoder-only models took over many tasks, but encoder-decoder remains strong where the source and target have different structures or modalities. Whisper is the main example: the encoder shapes audio features and the decoder emits text."
+    }
+  ]
+}

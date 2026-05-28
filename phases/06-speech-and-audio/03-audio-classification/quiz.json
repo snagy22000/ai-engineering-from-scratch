@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can overall accuracy be misleading on an imbalanced audio dataset?",
+      "options": ["Accuracy only works for regression tasks", "A model can look good by favoring common classes while performing badly on rare ones", "Accuracy cannot be computed for audio clips longer than 10 seconds", "Accuracy automatically ignores mislabeled examples"],
+      "correct": 1,
+      "explanation": "The lesson highlights class imbalance as one of the hardest practical issues in audio classification. When one class dominates, a model may achieve high overall accuracy while still having poor recall or F1 on the minority classes that matter."
+    },
+    {
+      "stage": "pre",
+      "question": "If two short audio clips sound similar, what simple baseline idea might classify them without training a deep network?",
+      "options": ["Compare feature vectors with nearest neighbors", "Sort them by file name", "Use only the longest clip as the label template", "Predict the class with the most letters"],
+      "correct": 0,
+      "explanation": "The lesson opens with the classic k-NN on MFCCs baseline. That approach computes clip features, compares them with cosine similarity, and uses nearby labeled examples to vote on the class."
+    },
+    {
+      "stage": "post",
+      "question": "How does the lesson describe a standard 2D CNN approach to audio classification?",
+      "options": ["Treat the waveform as text and apply a language model", "Treat the log-mel spectrogram as an image and apply convolutional layers", "Cluster raw PCM values with k-means and vote", "Decode the audio into words first and classify only the transcript"],
+      "correct": 1,
+      "explanation": "The lesson says the common 2015-2019 baseline is log-mel -> CNN -> softmax. In that setup, the time-by-mel matrix is treated like an image, and the network learns local patterns over time and frequency."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, what is the 2026 default starting point for many non-speech audio classification tasks?",
+      "options": ["Train a fresh CNN from scratch on every dataset", "Fine-tune a frozen or pretrained backbone such as BEATs or AST", "Use only MFCC means and never add augmentation", "Always transcribe the clip with ASR before classification"],
+      "correct": 1,
+      "explanation": "The lesson's rule of thumb is to start with a frozen backbone rather than a new model. It specifically calls out BEATs and AST as strong pretrained starting points that reach most of SOTA with much less supervised data."
+    },
+    {
+      "stage": "post",
+      "question": "Which metric does the lesson recommend as the main one for multi-label audio tasks like AudioSet?",
+      "options": ["BLEU", "Mean average precision (mAP)", "Perplexity", "ROC-AUC for only the majority class"],
+      "correct": 1,
+      "explanation": "The lesson distinguishes multiclass-exclusive settings from multi-label ones. For AudioSet-style problems where multiple labels can be active, it identifies mAP as the main evaluation metric to report."
+    }
+  ]
+}

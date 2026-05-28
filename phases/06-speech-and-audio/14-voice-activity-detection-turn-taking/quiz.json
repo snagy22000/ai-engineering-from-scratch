@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is a simple energy threshold usually not enough for production voice agents?",
+      "options": ["It cannot run on CPUs", "It confuses non-speech noise with speech", "It always requires a GPU cluster", "It produces full transcripts instead of speech segments"],
+      "correct": 1,
+      "explanation": "Energy thresholds respond to loudness, not meaning, so traffic, keyboards, and crowd noise can all trigger false speech detections. The lesson frames this as the main reason naive VAD breaks in real environments."
+    },
+    {
+      "stage": "pre",
+      "question": "What user experience problem happens if a system decides someone is done speaking too early?",
+      "options": ["The assistant interrupts mid-sentence", "The audio sample rate doubles", "The transcript becomes multilingual", "The microphone stops capturing forever"],
+      "correct": 0,
+      "explanation": "Turn-taking quality depends on not ending a user's turn prematurely. If the endpointing logic fires too early, the assistant cuts users off, which feels especially bad during hesitations or longer pauses."
+    },
+    {
+      "stage": "post",
+      "question": "What three layers make up the lesson's recommended 2026 turn-taking stack?",
+      "options": ["FFT normalization, diarization, speaker verification", "Energy gate, Silero VAD, semantic turn detector", "Opus compression, Mimi encoding, TTS vocoder", "Keyword spotter, translation model, pitch tracker"],
+      "correct": 1,
+      "explanation": "The lesson presents a three-tier cascade: a cheap energy gate, then Silero VAD for frame-level speech detection, then a semantic turn detector for deciding whether a pause means the user is actually done. Each layer handles a different failure mode."
+    },
+    {
+      "stage": "post",
+      "question": "What is the purpose of the pre-roll buffer in the lesson's design?",
+      "options": ["To compress audio before VAD runs", "To keep audio before VAD fires so first words are not clipped", "To add artificial silence between utterances", "To convert transcripts back into speech"],
+      "correct": 1,
+      "explanation": "The lesson recommends keeping roughly 300-500 ms of audio before speech detection triggers. That rolling buffer prevents the beginning of words like hey from getting chopped off by onset latency."
+    },
+    {
+      "stage": "post",
+      "question": "What does the flush trick do when VAD detects end-of-speech?",
+      "options": ["It deletes the STT buffer to save RAM", "It lowers the microphone gain for the next turn", "It forces the streaming STT system to emit buffered transcript immediately", "It replays the last utterance to verify diarization"],
+      "correct": 2,
+      "explanation": "The flush trick sends a special signal to the streaming STT model so it finishes processing its look-ahead buffer right away instead of waiting for the normal delay. In the lesson, this is how a 500 ms look-ahead can still feel conversational."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does full attention become such a severe bottleneck at 64k context and beyond?",
+      "options": [
+        "Its compute scales quadratically with sequence length",
+        "It cannot be combined with causal masking",
+        "It forces the model to use learned position embeddings",
+        "It disables grouped-query attention"
+      ],
+      "correct": 0,
+      "explanation": "The lesson states that attention can consume 70-80% of decode latency at 64k because each query compares against an enormous number of keys. That O(N^2) pattern eventually dominates both compute and memory bandwidth."
+    },
+    {
+      "stage": "pre",
+      "question": "Why do inference-time sparse tricks on a dense-pretrained model usually leave performance on the table?",
+      "options": [
+        "Because sparse kernels cannot run on GPUs",
+        "Because the model was never trained to route information through the sparse pattern",
+        "Because dense models cannot use sliding windows",
+        "Because top-k selection is always nondifferentiable"
+      ],
+      "correct": 1,
+      "explanation": "If a model learned with dense attention, turning on sparsity only at inference asks it to use a routing pattern it never practiced. NSA is meant to be trained natively so the model learns how to use the sparse structure from the start."
+    },
+    {
+      "stage": "post",
+      "question": "Which three branches make up Native Sparse Attention?",
+      "options": [
+        "Dense attention, cross-attention, and recurrence",
+        "Compressed branch, selected fine-grained branch, and sliding-window branch",
+        "MoE routing, quantization, and KV eviction",
+        "RoPE branch, RMSNorm branch, and SwiGLU branch"
+      ],
+      "correct": 1,
+      "explanation": "NSA combines a coarse global view, a routed fine-grained read of the most relevant blocks, and a local window for nearby structure. A learned gate mixes those three outputs rather than forcing one branch to handle everything."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson call NSA \"natively trainable\" even though it uses a top-k block selection?",
+      "options": [
+        "Because gradients flow through the compressed-branch attention scores that drive both routing and output quality",
+        "Because top-k is replaced by beam search during backward",
+        "Because only the sliding-window branch is trained",
+        "Because the model stores every token densely anyway"
+      ],
+      "correct": 0,
+      "explanation": "The key is that the compressed branch is fully differentiable and its scores determine which blocks get selected. The discrete top-k controls memory reads, but the learning signal still flows through the coarse attention map that produced those scores."
+    },
+    {
+      "stage": "post",
+      "question": "Using the lesson's 64k example with l=64, k=16, b=64, and w=512, about how many keys does NSA attend to per query?",
+      "options": [
+        "About 2,536 keys, roughly a 25x reduction from full attention",
+        "About 6,400 keys, roughly a 10x reduction",
+        "About 64,000 keys, so there is no reduction",
+        "About 512 keys, exactly the sliding-window size only"
+      ],
+      "correct": 0,
+      "explanation": "The compressed branch contributes N/l = 1000 keys, the selected branch contributes k*b = 1024, and the sliding window contributes 512. Summed together that is 2,536 keys per query, far below the 64,000 keys of full attention."
+    }
+  ]
+}

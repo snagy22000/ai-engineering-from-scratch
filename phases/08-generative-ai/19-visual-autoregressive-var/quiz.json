@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is ordinary next-token autoregression awkward for images compared with text?",
+      "options": [
+        "Because image content lives on a 2D grid, but raster-order generation forces a 1D order that gives early tokens little global context",
+        "Because images cannot be represented with discrete tokens",
+        "Because transformers only work on audio and text",
+        "Because 2D data never has long-range dependencies"
+      ],
+      "correct": 0,
+      "explanation": "The lesson describes the generation-order problem of pixel-by-pixel or token-by-token image AR models. A corner token is generated before the model knows the full scene, which hurts scaling and sample quality relative to language modeling."
+    },
+    {
+      "stage": "pre",
+      "question": "What intuition makes a coarse-to-fine generation strategy plausible for images?",
+      "options": [
+        "Images usually have stable low-frequency structure first, with fine detail depending on that coarse layout",
+        "Every image can be reconstructed perfectly from a single pixel",
+        "Fine detail always determines global composition",
+        "Image decoders ignore resolution information"
+      ],
+      "correct": 0,
+      "explanation": "Before learning VAR specifics, the natural prior is that global layout comes before texture. The lesson later formalizes this by saying next-scale prediction aligns with natural image statistics, where low-frequency structure is easier and more stable than high-frequency detail."
+    },
+    {
+      "stage": "post",
+      "question": "What does VAR generate at each step instead of producing image tokens strictly one by one?",
+      "options": [
+        "A whole token grid for the next resolution scale",
+        "A new text prompt describing the image",
+        "A single RGB pixel in raster order",
+        "A diffusion noise schedule"
+      ],
+      "correct": 0,
+      "explanation": "VAR changes the autoregressive unit from spatial token order to scale order. It predicts a 1x1 summary first, then 2x2, then 4x4, and so on, producing each scale in parallel."
+    },
+    {
+      "stage": "post",
+      "question": "How does the multi-scale VQ tokenizer in the lesson reconstruct the latent representation?",
+      "options": [
+        "By averaging raw pixels from every scale equally",
+        "By summing upsampled embeddings from multiple residual token grids that share a codebook",
+        "By discarding coarse scales once the fine scale is predicted",
+        "By decoding each scale with a separate language model"
+      ],
+      "correct": 1,
+      "explanation": "The tokenizer section says each scale captures the residual left by previous scales. Reconstruction works by embedding each token grid, upsampling it to the target size, and summing contributions across scales before decoding."
+    },
+    {
+      "stage": "post",
+      "question": "Why can VAR generate a 256x256 image in far fewer transformer passes than a diffusion transformer?",
+      "options": [
+        "Because VAR never uses attention",
+        "Because VAR predicts all tokens at a given scale in one pass, so the number of passes grows with the number of scales rather than the number of tokens or denoising steps",
+        "Because VAR skips the decoder entirely",
+        "Because diffusion models must render each pixel separately"
+      ],
+      "correct": 1,
+      "explanation": "The generation section notes that a K-scale model needs only K transformer forwards, with all positions within a scale predicted together. That makes the effective generation length logarithmic in scale, which is why the lesson contrasts roughly 10 passes for VAR with 28-50 for DiT."
+    }
+  ]
+}

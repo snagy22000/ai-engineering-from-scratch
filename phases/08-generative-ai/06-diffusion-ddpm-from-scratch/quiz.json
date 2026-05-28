@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is diffusion training usually more stable than GAN training?",
+      "options": [
+        "Because it never uses neural networks",
+        "Because it trains with a single denoising objective instead of a generator-discriminator minimax game",
+        "Because it only works on tiny datasets",
+        "Because it samples without noise"
+      ],
+      "correct": 1,
+      "explanation": "The lesson contrasts DDPMs with GANs by noting that GANs play a minimax game that often diverges. Diffusion instead trains one network with a simple denoising loss, so optimization is much more straightforward and stable."
+    },
+    {
+      "stage": "pre",
+      "question": "What must a denoising model know in addition to the noisy sample x_t to remove noise correctly?",
+      "options": [
+        "The optimizer state from training",
+        "The exact timestep or noise level",
+        "The final generated image",
+        "A human-written explanation of the image"
+      ],
+      "correct": 1,
+      "explanation": "A sample with light noise and a sample with heavy noise require different denoising behavior. The lesson emphasizes timestep conditioning, usually with sinusoidal embeddings, so the network knows which noise level it is reversing."
+    },
+    {
+      "stage": "post",
+      "question": "What does the closed-form forward process q(x_t | x_0) let you do during DDPM training?",
+      "options": [
+        "Skip sampling Gaussian noise entirely",
+        "Compute x_t directly from x_0 and epsilon without simulating every intermediate step",
+        "Train without choosing a beta schedule",
+        "Decode latents back into pixels"
+      ],
+      "correct": 1,
+      "explanation": "The doc gives the closed form q(x_t | x_0) = N(sqrt(alpha_bar_t) x_0, (1-alpha_bar_t) I). That means you can pick any timestep t, sample epsilon once, and construct x_t in one shot instead of running the whole Markov chain forward."
+    },
+    {
+      "stage": "post",
+      "question": "In the simplified DDPM objective from the lesson, what is the network trained to predict?",
+      "options": [
+        "The clean sample x_0 exactly",
+        "The beta schedule for the whole run",
+        "The Gaussian noise epsilon that was added to the data",
+        "A class label for the sample"
+      ],
+      "correct": 2,
+      "explanation": "Ho et al.'s simplification turns training into MSE between the sampled noise and the model's prediction epsilon_theta(x_t, t). The lesson highlights that this one-line objective replaces more complicated variational terms while still yielding excellent samples."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson describe diffusion as 'score matching in disguise'?",
+      "options": [
+        "Because the model ranks captions by similarity score",
+        "Because predicting noise is equivalent to estimating the gradient of the log density",
+        "Because training uses a reinforcement learning reward",
+        "Because the sampler chooses the highest-scoring class"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explains that predicting epsilon is equivalent to estimating the score, the gradient of log q(x_t | x_0). The reverse process then uses that density-gradient information to walk noisy samples back toward high-probability data regions."
+    }
+  ]
+}

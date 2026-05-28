@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "If you cannot query an environment's transition probabilities but you can run episodes, what kind of evidence can you still use to estimate value?",
+      "options": [
+        "Observed returns from sampled trajectories",
+        "Exact Bellman fixed points from the full model",
+        "Gradients of the environment dynamics",
+        "All future states enumerated in advance"
+      ],
+      "correct": 0,
+      "explanation": "Monte Carlo methods estimate expectations by averaging over sampled experience. The lesson motivates MC precisely for settings where a model is unavailable but trajectories can still be collected."
+    },
+    {
+      "stage": "pre",
+      "question": "Why might a purely greedy policy be a problem early in learning?",
+      "options": [
+        "It makes rewards too dense",
+        "It may never visit many state-action pairs, leaving their estimates unlearned",
+        "It guarantees unbiased estimates with low variance",
+        "It forces episodes to terminate immediately"
+      ],
+      "correct": 1,
+      "explanation": "Without exploration, the agent only sees the parts of the state space that its current choices lead to. The lesson highlights this as a core difference from DP, which touches all states by enumeration."
+    },
+    {
+      "stage": "post",
+      "question": "What is the difference between first-visit and every-visit Monte Carlo in the lesson?",
+      "options": [
+        "First-visit uses model knowledge while every-visit does not",
+        "First-visit only uses the return from the first occurrence of a state in an episode, while every-visit uses all occurrences",
+        "First-visit works only for actions and every-visit only for states",
+        "First-visit is off-policy and every-visit is on-policy"
+      ],
+      "correct": 1,
+      "explanation": "The lesson defines first-visit MC as counting only the first time a state appears within an episode. Every-visit MC instead uses the return from each occurrence, typically gaining sample efficiency while converging to the same target in the limit."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson compute returns with a reverse sweep through the trajectory?",
+      "options": [
+        "To avoid storing rewards at all",
+        "Because the recurrence G_t = r_{t+1} + gamma G_{t+1} lets returns be computed in one O(T) pass",
+        "Because Monte Carlo requires sorting states alphabetically",
+        "To ensure every episode has the same length"
+      ],
+      "correct": 1,
+      "explanation": "The lesson shows a backward recurrence for computing returns efficiently. By sweeping from the end of the episode to the beginning, you reuse the already computed future return instead of re-summing suffixes repeatedly."
+    },
+    {
+      "stage": "post",
+      "question": "What major practical limitation of Monte Carlo methods does the lesson emphasize?",
+      "options": [
+        "They require an exact model of transitions",
+        "They only work with continuous actions",
+        "They require episodes to terminate, and long episodes can create very high-variance return estimates",
+        "They cannot be used for policy improvement"
+      ],
+      "correct": 2,
+      "explanation": "Monte Carlo waits for complete episodes before updating, so non-terminating behavior is a real problem. The lesson also stresses that full-return targets can have high variance, especially on long horizons."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do production audio generators compress raw waveforms into codec tokens before modeling them?",
+      "options": [
+        "Because codec tokens make audio louder and easier to hear",
+        "Because raw audio is too long a sequence, while codecs reduce it to a much lower-rate token stream a model can handle",
+        "Because transformers cannot work on any continuous-valued signal",
+        "Because codec tokens eliminate the need for decoding back to waveform"
+      ],
+      "correct": 1,
+      "explanation": "The lesson starts by noting that a five-second clip can contain 80k-240k samples, which is too long to model directly with a transformer. Neural codecs like Encodec or DAC compress audio to roughly 50-75 Hz token streams, making generation tractable."
+    },
+    {
+      "stage": "pre",
+      "question": "Which property makes speech generation a better fit for token-autoregressive models than music generation?",
+      "options": [
+        "Speech has stronger local phonetic structure and benefits from causal, streaming generation",
+        "Speech contains more frequency bands than music",
+        "Speech never needs conditioning on text",
+        "Speech can only be represented with spectrogram pixels"
+      ],
+      "correct": 0,
+      "explanation": "The doc says token-AR still dominates speech because speech is naturally causal and streams well. It also describes clean speech as narrow-band with strong phonetic structure, which makes next-token prediction especially effective."
+    },
+    {
+      "stage": "post",
+      "question": "In the lesson, what does residual vector quantization (RVQ) do inside a neural audio codec?",
+      "options": [
+        "It mixes the left and right stereo channels into one waveform",
+        "It converts each timestep representation into a cascade of codebook indices across multiple quantizer layers",
+        "It turns text prompts into mel spectrograms",
+        "It removes all reconstruction error after the first codebook"
+      ],
+      "correct": 1,
+      "explanation": "The codec section explains that the encoder produces per-timestep vectors, then RVQ maps each vector through multiple codebooks. Each layer quantizes the residual left by the previous one, which is why errors in early layers can propagate."
+    },
+    {
+      "stage": "post",
+      "question": "What is the core difference between the two main generative paradigms described for audio generation?",
+      "options": [
+        "Token-AR predicts codec tokens sequentially, while latent diffusion or flow matching generates continuous or categorical latents by iterative denoising/transport",
+        "Token-AR only works for speech, while diffusion only works for sound effects",
+        "Token-AR operates on raw waveforms, while diffusion operates only on text embeddings",
+        "There is no practical difference; both always use the same sampling procedure"
+      ],
+      "correct": 0,
+      "explanation": "The lesson contrasts decoder-only transformers over flattened codec tokens with latent diffusion or flow-matching models over audio latents. It highlights that flow matching is gaining ground for music because it samples faster and produces cleaner clips, while AR remains better for streaming speech."
+    },
+    {
+      "stage": "post",
+      "question": "According to the production note, when should you prefer the codec autoregressive path over flow-matching audio models?",
+      "options": [
+        "When you need the absolute smallest training dataset",
+        "When the goal is live voice chat or real-time music continuation that must stream smoothly",
+        "When you are generating a fixed 30-second clip offline",
+        "Whenever you want to avoid using a vocoder"
+      ],
+      "correct": 1,
+      "explanation": "The production note says users expect audio to arrive as it is generated, so tokens per second and streaming latency matter. Because flow-matching systems usually render fixed clips and need chunking plus overlap to stream, codec AR is the recommended path for real-time interactive products."
+    }
+  ]
+}

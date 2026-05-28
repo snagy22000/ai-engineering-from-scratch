@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why are pairwise human preferences useful for training assistants?",
+      "options": [
+        "They let humans rank outputs even when a hand-written reward function is hard to specify",
+        "They remove the need for any pretrained language model",
+        "They make token prediction losses unnecessary in pretraining",
+        "They guarantee the policy will never exploit the reward"
+      ],
+      "correct": 0,
+      "explanation": "The lesson emphasizes that qualities like helpfulness are not easy to encode as a closed-form reward over tokens. Humans can still reliably compare two responses and choose the better one, which makes preference data practical for reward learning."
+    },
+    {
+      "stage": "pre",
+      "question": "What problem is a KL penalty generally meant to reduce in policy optimization?",
+      "options": [
+        "Making the model output longer responses",
+        "Keeping a learned policy from drifting too far from a reference behavior",
+        "Increasing the size of the reward model",
+        "Turning pairwise preferences into logits"
+      ],
+      "correct": 1,
+      "explanation": "The doc explains that RLHF keeps the trainable policy near the SFT reference so optimization does not wander into strange out-of-distribution behavior. KL acts as a regularizer that restrains drift rather than a hard constraint."
+    },
+    {
+      "stage": "post",
+      "question": "In the classic RLHF pipeline described in the lesson, what is the correct stage order?",
+      "options": [
+        "Reward model -> SFT -> PPO",
+        "SFT -> reward model -> PPO",
+        "PPO -> reward model -> SFT",
+        "SFT -> PPO -> reward model"
+      ],
+      "correct": 1,
+      "explanation": "The lesson presents RLHF as a three-stage recipe: supervised fine-tuning first, then reward-model training on preferences, then PPO against that reward model. This ordering matters because both the reward model and the policy are initialized from the SFT model."
+    },
+    {
+      "stage": "post",
+      "question": "What does the Bradley-Terry objective train the reward model to do?",
+      "options": [
+        "Predict the next token in a response",
+        "Assign higher scores to preferred responses than rejected ones",
+        "Minimize KL between policy and reference directly",
+        "Estimate environment transition probabilities"
+      ],
+      "correct": 1,
+      "explanation": "The reward model is trained on pairs of chosen and rejected completions. Bradley-Terry models the log-odds of preference from the score difference, so the chosen response should receive the higher reward."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, why is the KL term the most important knob in RLHF PPO?",
+      "options": [
+        "It determines how many preference pairs are collected",
+        "It prevents reward hacking by keeping the policy near the distribution where the reward model was trained",
+        "It replaces the reward model with a verifier",
+        "It ensures the reward model is larger than the policy"
+      ],
+      "correct": 1,
+      "explanation": "The document warns that without KL regularization, PPO can exploit weaknesses in the reward model by finding high-scoring but bad out-of-distribution completions. Keeping the policy close to the SFT reference limits this failure mode and is the top diagnostic to monitor."
+    }
+  ]
+}

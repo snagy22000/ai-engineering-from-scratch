@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is reusing old rollout data dangerous in a purely on-policy method like A2C?",
+      "options": [
+        "Because the environment becomes deterministic after one update",
+        "Because once the policy changes, the data is no longer from the current policy and the gradient becomes biased",
+        "Because replay buffers are forbidden in reinforcement learning",
+        "Because the critic cannot be trained on reused data"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explains that on-policy gradients assume data was sampled from the current policy. After an update, the policy has changed, so repeatedly using the same rollout introduces off-policy bias."
+    },
+    {
+      "stage": "pre",
+      "question": "What problem was TRPO designed to address before PPO simplified it?",
+      "options": [
+        "How to remove the critic from actor-critic methods",
+        "How to constrain policy updates so they do not move too far at once",
+        "How to make Q-learning work in continuous action spaces",
+        "How to replace entropy bonuses with replay buffers"
+      ],
+      "correct": 1,
+      "explanation": "TRPO introduced the trust-region idea: keep the new policy close to the old one, usually measured with KL divergence. PPO keeps that same intent but implements it with a much simpler clipped objective."
+    },
+    {
+      "stage": "post",
+      "question": "What does the PPO importance ratio r_t(theta) measure?",
+      "options": [
+        "The ratio of new reward to old reward",
+        "The ratio of current value estimate to old value estimate",
+        "How much more or less likely the new policy is to take the recorded action than the old policy",
+        "The ratio of entropy bonus to value loss"
+      ],
+      "correct": 2,
+      "explanation": "The lesson defines r_t(theta) = pi_theta(a_t|s_t) / pi_theta_old(a_t|s_t). It is a direct measure of how much the updated policy has changed the probability of the sampled action relative to the policy that generated the data."
+    },
+    {
+      "stage": "post",
+      "question": "What is the purpose of PPO's clipped surrogate objective?",
+      "options": [
+        "To let the policy keep changing arbitrarily as long as value loss is small",
+        "To stop policy updates from pushing action probabilities too far beyond a trust region",
+        "To replace advantage estimation with Monte Carlo returns",
+        "To eliminate the need for old log-probabilities"
+      ],
+      "correct": 1,
+      "explanation": "PPO clips the importance ratio around 1 +/- epsilon so that once a policy change becomes too large in the helpful direction, the gradient flattens. This gives a simple, practical approximation to a trust region and enables multiple epochs over one rollout."
+    },
+    {
+      "stage": "post",
+      "question": "Which diagnostic pairing matches the lesson's recommended PPO monitoring?",
+      "options": [
+        "Target sync frequency and replay warmup",
+        "Mean KL, clip fraction, and explained variance",
+        "Epsilon-greedy decay and reward clipping",
+        "Q-value overestimation and target-network lag"
+      ],
+      "correct": 1,
+      "explanation": "The lesson specifically recommends tracking mean KL, clip fraction, and explained variance every update. Together they reveal whether the policy is drifting too far, whether clipping is engaging at a healthy rate, and whether the critic is learning useful targets."
+    }
+  ]
+}

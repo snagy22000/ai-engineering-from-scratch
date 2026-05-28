@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why are raw audio waveforms often harder for a model to learn from than spectrogram-style features?",
+      "options": ["Raw waveforms do not contain frequency information at all", "Small timing shifts can change the samples a lot even when the sound is perceptually similar", "Waveforms can only represent speech, not music or noise", "Waveforms are always longer than spectrograms by exactly 10x"],
+      "correct": 1,
+      "explanation": "The lesson motivates spectrograms by noting that two identical phonemes spoken 100 ms apart can have very different raw samples. Spectrogram features preserve the time-frequency structure a model cares about while discarding micro-timing detail humans largely ignore."
+    },
+    {
+      "stage": "pre",
+      "question": "What trade-off do you usually make when you increase FFT window size in audio analysis?",
+      "options": ["Better frequency resolution but worse time resolution", "Better time resolution but worse frequency resolution", "Higher sample rate but lower bit depth", "Fewer frames and fewer frequency bins at the same time"],
+      "correct": 0,
+      "explanation": "The lesson calls this the core resolution trade in spectrogram design. Larger windows give a sharper view of frequency content, but each frame covers more time, so fast temporal changes are blurred."
+    },
+    {
+      "stage": "post",
+      "question": "At 16 kHz, what do the lesson's standard ASR framing settings of 25 ms window and 10 ms hop correspond to?",
+      "options": ["160-sample window and 80-sample hop", "200-sample window and 100-sample hop", "400-sample window and 160-sample hop", "800-sample window and 400-sample hop"],
+      "correct": 2,
+      "explanation": "The lesson explicitly gives the common ASR default as 25 ms and 10 ms at 16 kHz. That translates to 400 samples per frame and a 160-sample stride between frames."
+    },
+    {
+      "stage": "post",
+      "question": "What is the main purpose of the mel scale in this lesson's feature pipeline?",
+      "options": ["To force every clip to be exactly 30 seconds long", "To warp frequency so spacing better matches human pitch perception", "To replace FFT with a time-domain convolution", "To remove the need for log compression"],
+      "correct": 1,
+      "explanation": "The lesson says human pitch perception is roughly logarithmic, not linear in Hz. The mel scale warps the frequency axis so low and high frequencies are represented in a way that better matches how people hear pitch differences."
+    },
+    {
+      "stage": "post",
+      "question": "Which sequence best describes how to produce the log-mel features used by models like Whisper?",
+      "options": ["Waveform -> one-hot tokens -> decoder -> log", "Waveform -> STFT magnitude -> mel filterbank -> log transform", "Waveform -> MFCC -> inverse FFT -> mel filterbank", "Waveform -> resample -> cosine similarity -> log"],
+      "correct": 1,
+      "explanation": "The lesson builds log-mel spectrograms by first computing STFT magnitudes, then projecting them with a mel filterbank, then applying a log transform. It also stresses that this log-mel frontend is the universal audio input for many 2026 ASR systems."
+    }
+  ]
+}

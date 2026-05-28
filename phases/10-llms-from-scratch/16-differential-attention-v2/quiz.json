@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does standard softmax attention develop a \"noise floor\" on very long contexts?",
+      "options": [
+        "Because softmax assigns some positive probability to every token, so many tiny unrelated weights add up",
+        "Because RoPE forces all faraway tokens to the same score",
+        "Because RMSNorm eliminates large logits",
+        "Because attention heads are averaged before softmax"
+      ],
+      "correct": 0,
+      "explanation": "Softmax never outputs exact zeros, so unrelated tokens still receive small positive mass. Across tens or hundreds of thousands of positions, that residual mass becomes a meaningful amount of noise in the weighted sum."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the intuition behind subtracting two noisy attention maps?",
+      "options": [
+        "Shared background noise can cancel while useful signal remains",
+        "The subtraction makes all attention weights nonnegative",
+        "It removes the need for value vectors",
+        "It guarantees exact top-k sparsity"
+      ],
+      "correct": 0,
+      "explanation": "The lesson compares differential attention to two microphones picking up the same noise floor. If the nuisance component is correlated across both maps, subtraction can suppress it while preserving the parts that differ meaningfully."
+    },
+    {
+      "stage": "post",
+      "question": "Which formula matches differential attention in the lesson?",
+      "options": [
+        "DiffAttn = softmax(QK^T)V + softmax(VK^T)Q",
+        "DiffAttn = (A1 - λA2)V where A1 and A2 are separate softmax attention maps",
+        "DiffAttn = λ(Q + K + V)",
+        "DiffAttn = softmax((Q1 + Q2)(K1 + K2)^T)V"
+      ],
+      "correct": 1,
+      "explanation": "The core operation is to compute two attention maps from split query/key projections and subtract the second from the first with a learned λ scale. That difference is then multiplied by V, allowing signed contributions after the subtraction."
+    },
+    {
+      "stage": "post",
+      "question": "What production advantages did DIFF V2 add over DIFF V1?",
+      "options": [
+        "It doubled KV-cache loads and required a custom kernel",
+        "It matched baseline decode speed, kept KV loaded once, worked with FlashAttention, and removed the unstable per-head RMSNorm",
+        "It replaced RoPE with learned positions and removed λ",
+        "It converted the architecture into a pure MoE model"
+      ],
+      "correct": 1,
+      "explanation": "V1 was slower at decode and awkward to integrate because of kernel and stability issues. V2 changes the head bookkeeping so decode matches baseline speed and existing FlashAttention paths can stay intact."
+    },
+    {
+      "stage": "post",
+      "question": "For which workload does the lesson say DIFF V2 is most attractive?",
+      "options": [
+        "Short chat under 4k context",
+        "Long-context retrieval and RAG workloads above roughly 64k tokens",
+        "Tokenizer training on multilingual corpora",
+        "Quantizing tiny 1B models for CPU use"
+      ],
+      "correct": 1,
+      "explanation": "The value of differential attention grows with context length because the softmax noise floor grows with context length. The lesson specifically highlights long-context RAG, multi-document QA, and needle-in-haystack setups rather than short chat."
+    }
+  ]
+}

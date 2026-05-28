@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why might a direct policy be preferable to argmax over Q-values in some tasks?",
+      "options": [
+        "Because direct policies can naturally represent stochastic or continuous-action choices",
+        "Because Q-values cannot be learned with gradient descent",
+        "Because policy methods never require exploration",
+        "Because direct policies avoid needing rewards"
+      ],
+      "correct": 0,
+      "explanation": "The lesson motivates policy gradients by noting that argmax over Q-values is awkward for continuous actions and always produces a deterministic choice. A parameterized policy can instead output a distribution and be sampled directly."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the intuition behind using log-probabilities in REINFORCE?",
+      "options": [
+        "They make the environment dynamics differentiable",
+        "They let us turn gradients of probabilities into a tractable expectation",
+        "They guarantee low-variance updates by themselves",
+        "They remove the need to sample trajectories"
+      ],
+      "correct": 1,
+      "explanation": "REINFORCE relies on the log-derivative trick: rewriting gradients of trajectory probabilities as probability times gradient of log probability. That turns the policy optimization objective into something we can estimate from sampled trajectories."
+    },
+    {
+      "stage": "post",
+      "question": "What gradient estimator does the REINFORCE theorem provide?",
+      "options": [
+        "The gradient of expected return is the expected TD error times Q-value",
+        "The gradient of expected return is the expected return times the gradient of log policy",
+        "The gradient of expected return is the expected entropy minus the reward",
+        "The gradient of expected return is the Bellman residual of the policy network"
+      ],
+      "correct": 1,
+      "explanation": "The lesson gives REINFORCE as grad J(theta) = E[G * grad log pi_theta(a|s)]. In practice, you run episodes, compute returns, and weight each log-policy gradient by the observed return or reward-to-go."
+    },
+    {
+      "stage": "post",
+      "question": "Why does subtracting a baseline such as V-hat(s) not bias the policy-gradient estimate?",
+      "options": [
+        "Because the baseline is always equal to the true return",
+        "Because any state-only baseline has zero expectation when multiplied by grad log pi(a|s)",
+        "Because the baseline is clipped before backpropagation",
+        "Because the baseline changes the environment reward function"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explains that any baseline b(s) independent of the chosen action can be subtracted without changing the expected gradient. Its contribution has zero mean under the policy, so it reduces variance without shifting the expectation."
+    },
+    {
+      "stage": "post",
+      "question": "What is the benefit of reward-to-go compared with using the full episode return at every step?",
+      "options": [
+        "It includes past rewards so the signal is stronger",
+        "It makes the method off-policy",
+        "It removes zero-mean noise from past rewards that could not have been caused by the current action",
+        "It guarantees convergence in continuous control"
+      ],
+      "correct": 2,
+      "explanation": "Reward-to-go uses only future rewards from time t onward when crediting action at time t. The lesson notes that past rewards cannot be affected by the current action, so including them only adds variance and worsens credit assignment."
+    }
+  ]
+}

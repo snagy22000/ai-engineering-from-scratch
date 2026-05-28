@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the basic idea behind speculative decoding?",
+      "options": [
+        "Use a cheap draft model to guess several tokens, then verify them with one pass of the large target model",
+        "Train the target model to emit all future tokens in one step",
+        "Replace autoregressive decoding with beam search only",
+        "Cache the final answer before the prompt is processed"
+      ],
+      "correct": 0,
+      "explanation": "The lesson frames decode as massively over-provisioned: a small model can often guess several next tokens correctly. If the large model verifies many positions in one pass, you can get multiple accepted tokens for near the cost of one big forward."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is a good draft model so important for speculative decoding?",
+      "options": [
+        "Because the acceptance rate α determines how many drafted tokens survive verification",
+        "Because the draft determines the tokenizer vocabulary",
+        "Because the draft replaces the target model during sampling",
+        "Because the draft sets the optimizer state for inference"
+      ],
+      "correct": 0,
+      "explanation": "The expected throughput gain depends on how often the target accepts the draft's proposed tokens. A poor draft collapses acceptance and leaves you paying extra draft overhead for little or no speedup."
+    },
+    {
+      "stage": "post",
+      "question": "What preserves exact sampling from the target distribution when a drafted token is rejected?",
+      "options": [
+        "Sampling a replacement from the residual distribution (p - q)+ normalized",
+        "Always taking the draft token anyway if temperature is low",
+        "Resetting the prompt and starting over",
+        "Using majority vote across several draft models"
+      ],
+      "correct": 0,
+      "explanation": "Leviathan-style speculative decoding is exact because rejected tokens are not replaced arbitrarily. The replacement comes from the positive residual between target and draft probabilities, which corrects the overall sampling law back to p."
+    },
+    {
+      "stage": "post",
+      "question": "What architectural idea did EAGLE add on top of vanilla speculative decoding?",
+      "options": [
+        "It replaced the verifier with a reward model",
+        "It reused verifier hidden states and allowed tree-structured drafting verified with a tree attention mask",
+        "It removed the need for accept/reject sampling",
+        "It forced the draft length K to equal the vocabulary size"
+      ],
+      "correct": 1,
+      "explanation": "EAGLE observes that the verifier already computed useful hidden features and that verification need not be limited to a single drafted chain. By drafting a tree and verifying it with a tree attention mask, one forward pass can evaluate several candidate continuations at once."
+    },
+    {
+      "stage": "post",
+      "question": "In which setting does the lesson say speculative decoding often loses or brings little benefit?",
+      "options": [
+        "Code generation with predictable syntax",
+        "Structured outputs like JSON or SQL",
+        "Creative high-temperature sampling where α drops sharply",
+        "Chat workloads with highly aligned draft and target models"
+      ],
+      "correct": 2,
+      "explanation": "Speculative decoding works best when the draft can confidently match the target on upcoming tokens. High-temperature creative generation makes the next token distribution much less predictable, which drives acceptance down and can erase the speedup."
+    }
+  ]
+}

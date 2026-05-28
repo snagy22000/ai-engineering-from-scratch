@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do recurrent neural networks underuse modern GPUs on long sequences?",
+      "options": ["They require more parameters than transformers", "Each token depends on the previous hidden state, so computation must proceed step by step", "They cannot represent variable-length inputs", "They only work on CPUs, not GPUs"],
+      "correct": 1,
+      "explanation": "An RNN computes token t using the hidden state from token t-1, so later steps cannot start until earlier ones finish. That serial dependency wastes hardware built for massive parallel matrix math."
+    },
+    {
+      "stage": "pre",
+      "question": "What failure do vanishing gradients cause in long recurrent models?",
+      "options": ["They make the vocabulary collapse to a few tokens", "They prevent the model from using any nonlinearity", "They make information from far-back tokens hard to preserve and learn from", "They force all hidden states to have different widths"],
+      "correct": 2,
+      "explanation": "As gradients pass through many recurrent steps, they shrink and the training signal fades. That makes long-range dependencies, like linking a word to something mentioned many tokens earlier, much harder to learn."
+    },
+    {
+      "stage": "post",
+      "question": "What was the key architectural move of the 2017 transformer paper?",
+      "options": ["Make hidden states wider while keeping recurrence", "Drop recurrence and let every position attend to every other position in parallel", "Replace attention with convolutions", "Compress the whole sequence into one fixed vector before decoding"],
+      "correct": 1,
+      "explanation": "The lesson explains that \"Attention Is All You Need\" removed recurrence entirely. Instead of processing tokens one by one, the model computes pairwise attention across the sequence in parallel."
+    },
+    {
+      "stage": "post",
+      "question": "What trade-off do transformers make relative to RNNs?",
+      "options": ["They reduce memory from O(N) to O(1) but increase serial depth", "They remove the need for positional information entirely", "They trade RNN-style serial time for O(N^2) attention memory and then win back speed through parallelism", "They always use less compute and less memory at every sequence length"],
+      "correct": 2,
+      "explanation": "The docs emphasize that attention has a quadratic memory cost in sequence length. Transformers accept that memory bill because parallel attention dramatically reduces serial depth and speeds training on modern hardware."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, when is an RNN or state-space model still a strong choice in 2026?",
+      "options": ["When you want batched training up to 128K context", "When you need streaming inference one token at a time with constant memory", "When your top priority is maximum bidirectional context", "When you want every token to attend to every other token"],
+      "correct": 1,
+      "explanation": "The lesson's decision table still gives recurrence an edge for streaming inference. In that setting, processing one token at a time with constant memory matters more than transformer-style parallel training."
+    }
+  ]
+}

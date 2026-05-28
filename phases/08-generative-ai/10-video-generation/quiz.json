@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is video generation much harder than image generation even if both use diffusion?",
+      "options": [
+        "Because videos cannot be compressed",
+        "Because videos add a time dimension, massively increasing data size and the need for temporal consistency",
+        "Because diffusion only works on still images",
+        "Because prompts are shorter for video"
+      ],
+      "correct": 1,
+      "explanation": "The lesson starts by pointing out that a video is effectively a 3-D tensor rather than a 2-D image. That adds far more data to process and creates a new requirement: frames must stay coherent over time instead of each being correct in isolation."
+    },
+    {
+      "stage": "pre",
+      "question": "What artifact do you expect if you generate each frame independently with an image model?",
+      "options": [
+        "Perfect motion tracking",
+        "Flicker from frame-to-frame inconsistency",
+        "Higher audio quality",
+        "Lower memory use with no downside"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly warns that independent per-frame sampling produces flicker. Without coupling frames through shared denoising or attention, identities, lighting, and details drift from one frame to the next."
+    },
+    {
+      "stage": "post",
+      "question": "What role does the video VAE play in the lesson's architecture?",
+      "options": [
+        "It writes the final captions for the clip",
+        "It compresses the video into spatiotemporal latents before patchification and diffusion",
+        "It replaces temporal attention with convolutions",
+        "It guarantees full 3D attention is cheap"
+      ],
+      "correct": 1,
+      "explanation": "The concept section begins with spatiotemporal compression using a 3D VAE. Instead of diffusing raw frames, the model first turns the clip into a smaller latent tensor over time and space, which makes the downstream DiT tractable."
+    },
+    {
+      "stage": "post",
+      "question": "Why do production video models usually use factorized attention instead of full 3D attention?",
+      "options": [
+        "Because factorized attention removes the need for positional embeddings",
+        "Because full 3D attention is far more expensive, so models separate spatial and temporal attention to control compute",
+        "Because text conditioning only works with factorized attention",
+        "Because factorized attention requires no training data"
+      ],
+      "correct": 1,
+      "explanation": "The lesson states that full 3D attention can be 16 to 100 times more expensive and is mostly limited to low-resolution research settings. Splitting attention into spatial and temporal passes keeps the model expressive while staying within practical memory and latency budgets."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, what training data improvement was especially important for Sora-style video models?",
+      "options": [
+        "Switching from text prompts to class labels only",
+        "Using much more detailed re-captioned clips with dense prompts",
+        "Removing all first-frame conditioning examples",
+        "Training only on five-second videos"
+      ],
+      "correct": 1,
+      "explanation": "The pitfalls section says caption quality mattered enormously and highlights GPT-generated dense re-captions. More detailed descriptions gave the model better supervision about actions, objects, and scene changes than short web captions alone."
+    }
+  ]
+}

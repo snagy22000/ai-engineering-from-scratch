@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is bidirectional context valuable for many language understanding tasks?",
+      "options": ["It lets the model use clues from both the left and right of a token", "It guarantees linear-time generation", "It removes the need for tokenization", "It forces all tasks to use the same output head"],
+      "correct": 0,
+      "explanation": "Tasks like classification, NER, and retrieval benefit from seeing the full surrounding context of each token. A bidirectional encoder can use evidence from both directions instead of being restricted to only past tokens."
+    },
+    {
+      "stage": "pre",
+      "question": "Why was pretraining one large language model and then fine-tuning it such a big shift for NLP?",
+      "options": ["It eliminated the need for labeled data entirely", "It let each task reuse broad language knowledge instead of training a fresh model from scratch", "It made recurrent models deeper", "It replaced embeddings with hand-written features"],
+      "correct": 1,
+      "explanation": "Before BERT, many NLP tasks trained separate models on small labeled datasets. Pretraining created a shared language backbone that could be adapted with a small task-specific head, greatly improving parameter efficiency."
+    },
+    {
+      "stage": "post",
+      "question": "What masking recipe does BERT use for the tokens selected for prediction?",
+      "options": ["100% replaced with [MASK]", "50% [MASK], 50% unchanged", "80% [MASK], 10% random token, 10% unchanged", "10% [MASK], 80% random token, 10% unchanged"],
+      "correct": 2,
+      "explanation": "The lesson states that BERT selects 15% of tokens, then applies an 80/10/10 split to those selected positions. Most become [MASK], some become random tokens, and some stay unchanged while still being predicted."
+    },
+    {
+      "stage": "post",
+      "question": "Why doesn't BERT replace every selected token with [MASK]?",
+      "options": ["Because [MASK] is too expensive to store in the vocabulary", "Because [MASK] never appears at inference time, so always using it would create a train-test mismatch", "Because the encoder cannot process masked tokens", "Because RoPE requires some original tokens to stay visible"],
+      "correct": 1,
+      "explanation": "The docs explain that [MASK] is a pretraining artifact and does not appear in normal downstream inference. Mixing in random and unchanged tokens reduces that distribution shift so the encoder learns to handle more realistic inputs."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, when is an encoder like BERT still the right tool in 2026?",
+      "options": ["For autoregressive text generation and chat", "For retrieval, classification, and structured extraction where bidirectional embeddings matter", "Only for image generation", "Only when you need next-sentence prediction"],
+      "correct": 1,
+      "explanation": "The lesson says encoder-only models remain strong for classification, retrieval, reranking, and token labeling. They are faster per token than decoders for these tasks and their bidirectional representations make better embeddings."
+    }
+  ]
+}

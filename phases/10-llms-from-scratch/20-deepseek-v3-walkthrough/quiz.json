@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What problem is Multi-Head Latent Attention (MLA) mainly trying to solve?",
+      "options": [
+        "Shrinking long-context KV-cache memory by storing a shared latent instead of full per-head K/V tensors",
+        "Replacing the tokenizer with byte fallback",
+        "Improving optimizer convergence on short contexts only",
+        "Eliminating the need for RoPE"
+      ],
+      "correct": 0,
+      "explanation": "MLA compresses K and V into a lower-rank latent and reconstructs what each head needs on the fly. The lesson highlights this as the reason DeepSeek-V3's 128k KV cache is much smaller than a comparable GQA baseline."
+    },
+    {
+      "stage": "pre",
+      "question": "In a sparse MoE model, what is the difference between total parameters and active parameters?",
+      "options": [
+        "They are always identical once quantized",
+        "Total parameters count all stored weights, while active parameters count only the subset used in one forward pass",
+        "Active parameters count only the embedding table",
+        "Total parameters exclude routed experts"
+      ],
+      "correct": 1,
+      "explanation": "MoE models can store huge numbers of experts without using all of them for every token. The lesson uses this distinction to explain why DeepSeek-V3 is 671B total but only about 37B active per forward."
+    },
+    {
+      "stage": "post",
+      "question": "Which four DeepSeek-specific additions does the lesson emphasize beyond the standard open-model knobs?",
+      "options": [
+        "MLA, auxiliary-loss-free routing, MTP, and DualPipe",
+        "Byte fallback, RLHF, FlashAttention, and AWQ",
+        "LayerNorm, GELU, MHA, and learned positions",
+        "Gradient clipping, LoRA, DPO, and distillation"
+      ],
+      "correct": 0,
+      "explanation": "The walkthrough frames DeepSeek-V3 as GPT-style architecture plus several DeepSeek-specific system innovations. Those are the attention compression method, the router balancing method, the multi-token objective, and the training schedule."
+    },
+    {
+      "stage": "post",
+      "question": "What does `first_k_dense_layers: 3` mean in the simplified DeepSeek-V3 config?",
+      "options": [
+        "Only three layers use RoPE",
+        "The first three blocks use dense MLPs before the remaining layers switch to MoE blocks",
+        "Three layers are reserved for inference only",
+        "Only three layers are trained in BF16"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explains that the earliest layers stay dense for stability while the rest of the stack uses routed experts. Reading config fields this way is part of the lesson's goal of making every DeepSeek-V3 number interpretable."
+    },
+    {
+      "stage": "post",
+      "question": "What does the published 37B active / 671B total ratio imply about DeepSeek-V3?",
+      "options": [
+        "It is a dense model with no routing",
+        "It activates only about 5.5% of its stored parameters on each forward pass",
+        "Its KV cache is larger than its weight memory",
+        "Its MTP module dominates every inference pass"
+      ],
+      "correct": 1,
+      "explanation": "The ratio is the model's sparsity story in one number. DeepSeek-V3 stores enormous capacity but only spends compute on a small routed subset, which is why its active FLOPs look much closer to a smaller dense model."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why did large open models move away from full multi-head attention at scale?",
+      "options": [
+        "Full MHA makes optimizers unusable",
+        "Full MHA makes the KV cache too large for long-context inference",
+        "Full MHA prevents the use of RMSNorm",
+        "Full MHA only works on English text"
+      ],
+      "correct": 1,
+      "explanation": "The lesson emphasizes that long-context serving is often dominated by KV-cache memory rather than raw parameter count. Sharing or compressing K/V heads is how modern models keep inference practical above roughly 13B parameters."
+    },
+    {
+      "stage": "pre",
+      "question": "What practical advantage does RoPE have over learned absolute position embeddings?",
+      "options": [
+        "RoPE makes training fully deterministic",
+        "RoPE eliminates the embedding matrix",
+        "RoPE allows context-length extrapolation with scaling tricks instead of stopping at a learned table limit",
+        "RoPE removes the need for causal masking"
+      ],
+      "correct": 2,
+      "explanation": "Learned position embeddings are fixed lookup tables with a hard length limit. RoPE encodes position via deterministic rotations, which lets models stretch farther at inference with techniques like NTK scaling or YaRN."
+    },
+    {
+      "stage": "post",
+      "question": "Which list matches the six architectural knobs the lesson says keep changing across 2024-2026 open models?",
+      "options": [
+        "Tokenizer size, optimizer type, dataset mix, learning rate, batch size, checkpoint format",
+        "RMSNorm, RoPE, SwiGLU/GeGLU, attention head sharing, dense vs MoE MLP, and pre-norm placement",
+        "Beam search, chain-of-thought, RLHF, DPO, quantization, distillation",
+        "CUDA version, tensor parallelism, logging, eval harness, API format, prompt template"
+      ],
+      "correct": 1,
+      "explanation": "The whole point of the lesson is that modern open models are still GPT-like models with a small set of recurring architectural diffs. If you can read those six knobs from config.json, you can usually predict the model's memory and deployment behavior."
+    },
+    {
+      "stage": "post",
+      "question": "Llama 3 8B uses 32 query heads and 8 KV heads. What does that imply for KV-cache size versus full MHA?",
+      "options": [
+        "It is about 4x smaller",
+        "It is unchanged because queries still have 32 heads",
+        "It is about 4x larger",
+        "It disappears entirely"
+      ],
+      "correct": 0,
+      "explanation": "Grouped-query attention shares K and V across groups of query heads. With 32 Q heads and 8 KV heads, the cache stores only one quarter as many K/V streams as full 32-head MHA would."
+    },
+    {
+      "stage": "post",
+      "question": "Why can a model like Mixtral 8x7B have far more total parameters than active parameters per token?",
+      "options": [
+        "Because most weights are pruned away at inference time",
+        "Because RoPE hides unused parameters from the KV cache",
+        "Because the MoE router activates only a small top-k subset of experts for each token",
+        "Because RMSNorm merges multiple experts into one"
+      ],
+      "correct": 2,
+      "explanation": "MoE increases total capacity by storing many experts, but each token only runs through a few of them. That is why Mixtral and DeepSeek can advertise huge total parameter counts while paying compute closer to a much smaller dense model."
+    }
+  ]
+}

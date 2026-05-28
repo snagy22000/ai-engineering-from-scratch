@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does an audio sample rate of 16 kHz mean?",
+      "options": ["The file stores 16,000 bits per sample", "The signal was measured 16,000 times per second", "The waveform lasts 16,000 seconds", "The loudest frequency is 16,000 Hz"],
+      "correct": 1,
+      "explanation": "Sample rate is the number of samples captured each second. The lesson uses this to connect sample index to time with t = n / sr and to explain why a 10-second clip at 16 kHz has 160,000 samples."
+    },
+    {
+      "stage": "pre",
+      "question": "What usually happens when a signal contains frequencies above the Nyquist limit for a given sample rate?",
+      "options": ["They fold into lower frequencies as aliasing", "They become louder but stay at the same frequency", "They are automatically converted into silence", "They only change the phase, not the spectrum"],
+      "correct": 0,
+      "explanation": "The lesson emphasizes that Nyquist is sr/2, the highest frequency that can be represented unambiguously. Energy above that limit aliases, meaning it appears as false lower-frequency content in the sampled signal."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, how many samples are in a 10-second mono clip recorded at 16 kHz?",
+      "options": ["16,000", "80,000", "160,000", "320,000"],
+      "correct": 2,
+      "explanation": "A 16 kHz signal has 16,000 samples per second. Over 10 seconds, that becomes 160,000 samples, which the lesson uses as the canonical example for waveform length."
+    },
+    {
+      "stage": "post",
+      "question": "For an N-point DFT, which formula maps frequency bin k to its frequency in Hz?",
+      "options": ["k / N", "k * N / sr", "k * sr / N", "sr / (k + N)"],
+      "correct": 2,
+      "explanation": "The lesson states that DFT bin k corresponds to k · sr / N Hz. This mapping is what lets you convert the index of the dominant FFT peak back into a real-world frequency."
+    },
+    {
+      "stage": "post",
+      "question": "Why do we apply a window such as Hann or Hamming before taking the FFT of short audio frames?",
+      "options": ["To increase bit depth", "To remove edge discontinuities and reduce spectral leakage", "To make the sample rate higher", "To convert stereo into mono"],
+      "correct": 1,
+      "explanation": "The lesson explains that we do not FFT the whole clip at once; we frame it and taper each frame with a window. That window suppresses discontinuities at the frame boundaries, which reduces leakage into neighboring frequency bins."
+    }
+  ]
+}

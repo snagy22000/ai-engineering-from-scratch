@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is ordinary autoregressive decoding slow even on powerful hardware?",
+      "options": [
+        "Because every next token depends on the previous one, generation is inherently serial",
+        "Because GPU memory cannot store logits",
+        "Because language models cannot batch verification",
+        "Because the verifier always needs beam search"
+      ],
+      "correct": 0,
+      "explanation": "Standard decoding produces one token, then uses that result to produce the next, which creates a hard sequential dependency. The lesson motivates speculative decoding as a way to break that chain without changing the final distribution."
+    },
+    {
+      "stage": "pre",
+      "question": "Which situation usually gives a higher speculative-decoding acceptance rate \u03b1?",
+      "options": [
+        "A draft model from the same family and training setup as the verifier",
+        "A completely unrelated draft model with higher temperature sampling",
+        "Free-form creative writing with very random outputs",
+        "Using no draft probabilities at all"
+      ],
+      "correct": 0,
+      "explanation": "Acceptance is higher when the cheap draft closely matches the verifier's distribution. The lesson points out that shared model family, shared training data, and structured tasks like code all tend to improve \u03b1."
+    },
+    {
+      "stage": "post",
+      "question": "How does vanilla speculative decoding decide whether to accept a drafted token d_i?",
+      "options": [
+        "Accept only if q_i(d_i) is greater than 0.5",
+        "Accept with probability min(1, q_i(d_i) / p_i(d_i))",
+        "Accept whenever the draft model sampled greedily",
+        "Accept with probability p_i(d_i) - q_i(d_i)"
+      ],
+      "correct": 1,
+      "explanation": "The left-to-right acceptance test compares how much probability the verifier assigns to the drafted token versus the draft model. Using min(1, q/p) is the rejection-sampling step that makes the overall procedure exact rather than approximate."
+    },
+    {
+      "stage": "post",
+      "question": "What is the residual distribution used after the first rejection?",
+      "options": [
+        "The verifier distribution q with all probabilities squared",
+        "The draft distribution p renormalized over accepted tokens",
+        "The normalized positive part of q - p, written (q - p)_+",
+        "A uniform distribution over the whole vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "On rejection, the algorithm samples from the parts of the verifier distribution that the draft under-covered. The lesson defines this precisely as the normalized positive part of q minus p, which preserves the verifier's marginal distribution."
+    },
+    {
+      "stage": "post",
+      "question": "What happens when the verifier accepts all N drafted tokens in one speculative step?",
+      "options": [
+        "Generation stops and the cache is cleared",
+        "The model discards the accepted drafts and retries",
+        "The verifier samples one extra bonus token from its next-step distribution",
+        "The draft model must sample the next token alone"
+      ],
+      "correct": 2,
+      "explanation": "If every drafted token is accepted, the verifier has already computed the distribution for the following position as part of the same pass. The algorithm therefore gets a free bonus token from q_(N+1), which is part of the speedup story."
+    }
+  ]
+}

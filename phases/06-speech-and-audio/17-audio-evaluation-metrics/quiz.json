@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is using only one metric usually a bad idea for audio systems?",
+      "options": ["Because audio models cannot be benchmarked numerically", "Because different metrics capture different qualities like accuracy, latency, and naturalness", "Because all audio tasks use the same target output", "Because public leaderboards forbid multiple metrics"],
+      "correct": 1,
+      "explanation": "The lesson emphasizes that each audio task has multiple axes of quality, and no single number captures them all. A system can look strong on one metric while failing on user-important dimensions such as latency, intelligibility, or speaker similarity."
+    },
+    {
+      "stage": "pre",
+      "question": "For speech recognition, what basic thing should you do before computing WER?",
+      "options": ["Always convert the transcript to phonemes manually", "Normalize text such as case, punctuation, and numbers", "Run speaker diarization first", "Measure MOS instead"],
+      "correct": 1,
+      "explanation": "WER is sensitive to formatting details, so the lesson recommends lowercasing, stripping punctuation, and normalizing numbers before scoring. Without normalization, small text-format differences can inflate error rates unfairly."
+    },
+    {
+      "stage": "post",
+      "question": "Which metric does the lesson identify as the primary one for speaker verification?",
+      "options": ["DER", "SECS", "EER", "FAD"],
+      "correct": 2,
+      "explanation": "For speaker verification, the lesson names Equal Error Rate as the primary headline metric, with minDCF and operating-point FAR or FRR as secondary views. EER summarizes the tradeoff between false accepts and false rejects at the crossing point."
+    },
+    {
+      "stage": "post",
+      "question": "What is WER-on-ASR-round-trip used for in TTS evaluation?",
+      "options": ["To measure how fast the vocoder loads", "To estimate intelligibility by transcribing generated speech back to text", "To replace MOS panels for music generation", "To detect whether a watermark payload survived compression"],
+      "correct": 1,
+      "explanation": "The lesson recommends synthesizing speech from text, running ASR on that output, and then comparing the transcript back to the input text. This catches intelligibility regressions even when the voice sounds plausible to the ear."
+    },
+    {
+      "stage": "post",
+      "question": "What are the lesson's three cardinal evaluation rules for deployments?",
+      "options": ["Normalize before scoring, report distributions not just averages, and run at least one public benchmark", "Use only human ratings, avoid public benchmarks, and hide latency percentiles", "Optimize only for MOS, use private data only, and skip normalization", "Report one aggregate score, one cherry-picked sample, and one screenshot"],
+      "correct": 0,
+      "explanation": "The lesson closes with three explicit rules: normalize before scoring, report distributions such as P50, P95, and P99 instead of just means, and include a canonical public benchmark for comparability. Together these make evaluation more honest and more useful for review."
+    }
+  ]
+}

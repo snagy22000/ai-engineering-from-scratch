@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In the lesson's default mental model, what are the three main parts of a modern TTS pipeline?",
+      "options": ["Text frontend, acoustic model, vocoder", "ASR encoder, language model, speaker verifier", "Tokenizer, retriever, reranker", "Denoiser, separator, diarizer"],
+      "correct": 0,
+      "explanation": "The lesson says modern TTS pipelines are best understood as text normalization or tokenization, text-to-mel acoustics, and mel-to-waveform vocoding. It also notes that even when end-to-end models blur the boundaries, this three-part model still helps with debugging."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the main job of a vocoder in a TTS system?",
+      "options": ["To normalize text into phonemes", "To turn acoustic features such as mel spectrograms into waveform samples", "To identify the speaker from a reference clip", "To remove room noise from recorded speech"],
+      "correct": 1,
+      "explanation": "The lesson separates TTS into a text frontend, an acoustic model, and a vocoder. The vocoder is the last step that converts the intermediate acoustic representation into audible waveform samples."
+    },
+    {
+      "stage": "post",
+      "question": "What specific advantage does FastSpeech 2 gain from its duration predictor?",
+      "options": ["It makes the model autoregressive so it sounds more natural", "It predicts speaker identity from the waveform", "It decides how many mel frames each phoneme gets, enabling one-pass non-autoregressive generation", "It replaces the vocoder entirely"],
+      "correct": 2,
+      "explanation": "The lesson explains that FastSpeech 2 predicts phoneme durations, which lets it expand text into mel timing without autoregressive decoding. That is why it can run in one pass and be much faster than Tacotron-style systems."
+    },
+    {
+      "stage": "post",
+      "question": "If you need zero-shot voice cloning from about 5 seconds of reference audio, which open-source model does the lesson recommend?",
+      "options": ["HiFi-GAN", "WaveRNN", "F5-TTS", "BigVGAN"],
+      "correct": 2,
+      "explanation": "The lesson calls F5-TTS a 2024 flow-matching diffusion model with strong natural prosody and zero-shot cloning from a 5-second reference clip. It also presents F5-TTS as the open-source quality leader in the 2026 stack."
+    },
+    {
+      "stage": "post",
+      "question": "Which metric in the lesson is used as a proxy for intelligibility by transcribing generated speech with Whisper and comparing it to the input text?",
+      "options": ["MOS", "SECS", "DNSMOS", "CER"],
+      "correct": 3,
+      "explanation": "The lesson defines CER, character error rate, as an intelligibility proxy computed by running TTS output through ASR and comparing it with the original text. Unlike MOS or SECS, it focuses on whether the spoken content is recognized correctly."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why must a next-token language model be prevented from seeing future tokens during training?",
+      "options": ["So it can memorize the whole sequence faster", "So it does not cheat by using the answer token it is supposed to predict", "So attention weights stay perfectly uniform", "So embeddings do not need positional information"],
+      "correct": 1,
+      "explanation": "Next-token prediction is only meaningful if position t uses tokens before t, not the answer at t or beyond. If the model can look ahead, training becomes trivial and it learns a shortcut instead of genuine causal prediction."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the basic generation pattern of an autoregressive model like GPT?",
+      "options": ["Encode the whole prompt once and output all future tokens in a single step", "Predict one token, append it to the context, then repeat", "Mask random tokens in the input and fill them in simultaneously", "Route each token through a different expert network"],
+      "correct": 1,
+      "explanation": "Autoregressive models generate sequentially: they use the current context to predict the next token, then feed that new token back in. This makes inference inherently serial even if training can process many positions in parallel."
+    },
+    {
+      "stage": "post",
+      "question": "What does GPT's causal mask look like before softmax for a sequence of length N?",
+      "options": ["A diagonal matrix of 1s and 0s that blocks self-attention", "An upper-triangular matrix with -inf above the diagonal and 0 elsewhere", "A lower-triangular matrix with +inf below the diagonal", "A random sparse matrix sampled at each step"],
+      "correct": 1,
+      "explanation": "The lesson defines the causal mask as 0 when j <= i and -inf when j > i. Adding that matrix before softmax forces all future-token probabilities to zero while preserving attention to the current and earlier positions."
+    },
+    {
+      "stage": "post",
+      "question": "For tokens [t1, t2, t3, t4], which input-target pairing matches GPT's shift-by-one training loss?",
+      "options": ["Input [t1, t2, t3, t4], target [t1, t2, t3, t4]", "Input [t1, t2, t3], target [t2, t3, t4]", "Input [t2, t3, t4], target [t1, t2, t3]", "Input [t1, t2], target [t3, t4]"],
+      "correct": 1,
+      "explanation": "GPT training predicts the next token at every position, so the model consumes a prefix and is scored against the sequence shifted one step to the left. That is why [t1, t2, t3] is paired with targets [t2, t3, t4] in the lesson."
+    },
+    {
+      "stage": "post",
+      "question": "According to the lesson, why is decoding the latency bottleneck for LLM inference?",
+      "options": ["Because softmax is quadratic in vocabulary size", "Because the model must generate tokens one at a time, so serial depth grows with output length", "Because RLHF disables parallel GPU execution", "Because token embeddings must be retrained during inference"],
+      "correct": 1,
+      "explanation": "Training computes many next-token losses in parallel across a sequence, but inference still has to produce token t+1 before it knows token t+2. The KV cache reduces recomputation, yet it does not remove the serial dependency that makes decoding slow."
+    }
+  ]
+}

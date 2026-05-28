@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why are games such a strong benchmark for reinforcement learning?",
+      "options": [
+        "They usually provide clear rewards, resettable episodes, and controlled simulation",
+        "They remove the need for exploration",
+        "They are always single-agent problems",
+        "They never require function approximation"
+      ],
+      "correct": 0,
+      "explanation": "The lesson frames games as ideal RL testbeds because they offer clean objectives like win/loss, unlimited self-play episodes, and exact simulators. Those properties make progress measurable and reproducible across algorithms."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the basic purpose of self-play in competitive RL?",
+      "options": [
+        "To replace the policy network with search entirely",
+        "To generate training experience by having the agent improve against versions of itself",
+        "To avoid using rewards",
+        "To guarantee convergence in all general-sum games"
+      ],
+      "correct": 1,
+      "explanation": "Self-play creates a moving curriculum where the agent is continually challenged by strong opponents similar to itself. The doc presents this as a core ingredient behind AlphaZero-style systems and later game-RL breakthroughs."
+    },
+    {
+      "stage": "post",
+      "question": "In AlphaZero, what becomes the policy training target at each move?",
+      "options": [
+        "The raw network prior before search",
+        "The MCTS visit distribution over actions",
+        "Only the final game outcome",
+        "A hand-written heuristic evaluation"
+      ],
+      "correct": 1,
+      "explanation": "AlphaZero uses search not just for acting but for policy improvement. The visit counts from MCTS define a stronger action distribution than the raw network prior, and the policy network is trained to imitate that improved target."
+    },
+    {
+      "stage": "post",
+      "question": "What key capability distinguishes MuZero from AlphaZero?",
+      "options": [
+        "MuZero uses no policy network",
+        "MuZero learns a latent dynamics model so search can run without known game rules",
+        "MuZero replaces self-play with human demonstrations",
+        "MuZero is only for imperfect-information poker"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explains that AlphaZero assumes known rules, while MuZero learns the dynamics, reward, and prediction functions in latent space. This lets it perform AlphaZero-style planning even when the environment model is not provided directly."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson say GRPO is well-suited to LLM reasoning tasks?",
+      "options": [
+        "It depends on MCTS over tokens at every step",
+        "It uses a group-relative baseline and no critic, which works well with sparse verifier rewards",
+        "It requires a learned reward model for every prompt",
+        "It is mainly for preference alignment rather than verifiable tasks"
+      ],
+      "correct": 1,
+      "explanation": "GRPO samples multiple completions for the same prompt, scores them with a verifier, and normalizes rewards within the group. The lesson argues this handles sparse end-of-trajectory reasoning rewards efficiently while avoiding the memory cost of training a value network."
+    }
+  ]
+}

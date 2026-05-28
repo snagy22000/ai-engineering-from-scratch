@@ -3415,7 +3415,7 @@
           "path": "phases/06-speech-and-audio/01-audio-fundamentals",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3442,7 +3442,7 @@
           "path": "phases/06-speech-and-audio/02-spectrograms-mel-features",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3470,7 +3470,7 @@
           "path": "phases/06-speech-and-audio/03-audio-classification",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3498,7 +3498,7 @@
           "path": "phases/06-speech-and-audio/04-speech-recognition-asr",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3525,7 +3525,7 @@
           "path": "phases/06-speech-and-audio/05-whisper-architecture-finetuning",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3554,7 +3554,7 @@
           "path": "phases/06-speech-and-audio/06-speaker-recognition-verification",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3582,7 +3582,7 @@
           "path": "phases/06-speech-and-audio/07-text-to-speech",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3609,7 +3609,7 @@
           "path": "phases/06-speech-and-audio/08-voice-cloning-conversion",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3638,7 +3638,7 @@
           "path": "phases/06-speech-and-audio/09-music-generation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3667,7 +3667,7 @@
           "path": "phases/06-speech-and-audio/10-audio-language-models",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3697,7 +3697,7 @@
           "path": "phases/06-speech-and-audio/11-real-time-audio-processing",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py",
@@ -3728,7 +3728,7 @@
           "path": "phases/06-speech-and-audio/12-voice-assistant-pipeline",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3757,7 +3757,7 @@
           "path": "phases/06-speech-and-audio/13-neural-audio-codecs",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3788,7 +3788,7 @@
           "path": "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3817,7 +3817,7 @@
           "path": "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -3846,7 +3846,7 @@
           "path": "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3876,7 +3876,7 @@
           "path": "phases/06-speech-and-audio/17-audio-evaluation-metrics",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3917,7 +3917,7 @@
           "path": "phases/07-transformers-deep-dive/01-why-transformers",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.jl",
@@ -3971,7 +3971,7 @@
           "path": "phases/07-transformers-deep-dive/03-multi-head-attention",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py",
@@ -4000,7 +4000,7 @@
           "path": "phases/07-transformers-deep-dive/04-positional-encoding",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.jl",
@@ -4030,7 +4030,7 @@
           "path": "phases/07-transformers-deep-dive/05-full-transformer",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.jl",
@@ -4058,7 +4058,7 @@
           "path": "phases/07-transformers-deep-dive/06-bert-masked-language-modeling",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4085,7 +4085,7 @@
           "path": "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4113,7 +4113,7 @@
           "path": "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4141,7 +4141,7 @@
           "path": "phases/07-transformers-deep-dive/09-vision-transformers",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4168,7 +4168,7 @@
           "path": "phases/07-transformers-deep-dive/10-audio-transformers-whisper",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4196,7 +4196,7 @@
           "path": "phases/07-transformers-deep-dive/11-mixture-of-experts",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4224,7 +4224,7 @@
           "path": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4252,7 +4252,7 @@
           "path": "phases/07-transformers-deep-dive/13-scaling-laws",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4279,7 +4279,7 @@
           "path": "phases/07-transformers-deep-dive/14-build-a-transformer-capstone",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4306,7 +4306,7 @@
           "path": "phases/07-transformers-deep-dive/15-attention-variants",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -4335,7 +4335,7 @@
           "path": "phases/07-transformers-deep-dive/16-speculative-decoding",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -4372,7 +4372,7 @@
           "path": "phases/08-generative-ai/01-generative-models-taxonomy-history",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4398,7 +4398,7 @@
           "path": "phases/08-generative-ai/02-autoencoders-vae",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4425,7 +4425,7 @@
           "path": "phases/08-generative-ai/03-gans-generator-discriminator",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4452,7 +4452,7 @@
           "path": "phases/08-generative-ai/04-conditional-gans-pix2pix",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4479,7 +4479,7 @@
           "path": "phases/08-generative-ai/05-stylegan",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4506,7 +4506,7 @@
           "path": "phases/08-generative-ai/06-diffusion-ddpm-from-scratch",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4533,7 +4533,7 @@
           "path": "phases/08-generative-ai/07-latent-diffusion-stable-diffusion",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4560,7 +4560,7 @@
           "path": "phases/08-generative-ai/08-controlnet-lora-conditioning",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4588,7 +4588,7 @@
           "path": "phases/08-generative-ai/09-inpainting-outpainting-editing",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4616,7 +4616,7 @@
           "path": "phases/08-generative-ai/10-video-generation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4645,7 +4645,7 @@
           "path": "phases/08-generative-ai/11-audio-generation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4674,7 +4674,7 @@
           "path": "phases/08-generative-ai/12-3d-generation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4702,7 +4702,7 @@
           "path": "phases/08-generative-ai/13-flow-matching-rectified-flows",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4729,7 +4729,7 @@
           "path": "phases/08-generative-ai/14-evaluation-fid-clip-score",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4757,7 +4757,7 @@
           "path": "phases/08-generative-ai/19-visual-autoregressive-var",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -4795,7 +4795,7 @@
           "path": "phases/09-reinforcement-learning/01-mdps-states-actions-rewards",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4822,7 +4822,7 @@
           "path": "phases/09-reinforcement-learning/02-dynamic-programming",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4849,7 +4849,7 @@
           "path": "phases/09-reinforcement-learning/03-monte-carlo-methods",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4876,7 +4876,7 @@
           "path": "phases/09-reinforcement-learning/04-q-learning-sarsa",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4904,7 +4904,7 @@
           "path": "phases/09-reinforcement-learning/05-dqn",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4931,7 +4931,7 @@
           "path": "phases/09-reinforcement-learning/06-policy-gradients-reinforce",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4958,7 +4958,7 @@
           "path": "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4985,7 +4985,7 @@
           "path": "phases/09-reinforcement-learning/08-ppo",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5012,7 +5012,7 @@
           "path": "phases/09-reinforcement-learning/09-reward-modeling-rlhf",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5040,7 +5040,7 @@
           "path": "phases/09-reinforcement-learning/10-multi-agent-rl",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5068,7 +5068,7 @@
           "path": "phases/09-reinforcement-learning/11-sim-to-real-transfer",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5096,7 +5096,7 @@
           "path": "phases/09-reinforcement-learning/12-rl-for-games",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5386,7 +5386,7 @@
           "path": "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5520,7 +5520,7 @@
           "path": "phases/10-llms-from-scratch/13-building-complete-llm-pipeline",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5550,7 +5550,7 @@
           "path": "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5584,7 +5584,7 @@
           "path": "phases/10-llms-from-scratch/15-speculative-decoding-eagle3",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5616,7 +5616,7 @@
           "path": "phases/10-llms-from-scratch/16-differential-attention-v2",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5646,7 +5646,7 @@
           "path": "phases/10-llms-from-scratch/17-native-sparse-attention",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5676,7 +5676,7 @@
           "path": "phases/10-llms-from-scratch/18-multi-token-prediction",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5705,7 +5705,7 @@
           "path": "phases/10-llms-from-scratch/19-dualpipe-parallelism",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5735,7 +5735,7 @@
           "path": "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5766,7 +5766,7 @@
           "path": "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5797,7 +5797,7 @@
           "path": "phases/10-llms-from-scratch/22-async-hogwild-inference",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -5827,7 +5827,7 @@
           "path": "phases/10-llms-from-scratch/25-speculative-decoding",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -5857,7 +5857,7 @@
           "path": "phases/10-llms-from-scratch/34-gradient-checkpointing",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"

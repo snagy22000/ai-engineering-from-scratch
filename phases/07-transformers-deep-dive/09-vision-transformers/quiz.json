@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a vision transformer do first to turn an image into something transformer-friendly?",
+      "options": ["It predicts class labels for each pixel", "It splits the image into patches and flattens them into a token sequence", "It converts RGB values into phoneme tokens", "It routes each image row to a separate expert"],
+      "correct": 1,
+      "explanation": "Transformers operate on sequences, so ViT begins by turning an image into a sequence of patch vectors. Each patch acts like a token, letting the same attention machinery used in language process visual input."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the main tradeoff when you choose smaller image patches in ViT?",
+      "options": ["You get fewer tokens and lower attention cost", "You get more detail but also more tokens and higher quadratic attention cost", "You remove the need for positional embeddings entirely", "You force the model to behave like an RNN"],
+      "correct": 1,
+      "explanation": "Smaller patches preserve finer visual detail because each token covers less of the image. But they also increase the token count, which raises self-attention cost because attention scales quadratically with sequence length."
+    },
+    {
+      "stage": "post",
+      "question": "What operation is equivalent to ViT's learned patch embedding layer?",
+      "options": ["A convolution with kernel size P and stride P", "A max-pooling layer with kernel size 2", "A recurrent scan over image rows", "A beam search over patch positions"],
+      "correct": 0,
+      "explanation": "The lesson notes that projecting each flattened patch with one learned matrix is equivalent to using a Conv2d with kernel size P and stride P. Both produce one embedding per non-overlapping patch location."
+    },
+    {
+      "stage": "post",
+      "question": "What is the role of the prepended [CLS] token in the original ViT classifier?",
+      "options": ["It stores the raw pixel values of the first patch", "Its final hidden state serves as the image representation for classification", "It masks out background patches during training", "It replaces all positional embeddings"],
+      "correct": 1,
+      "explanation": "ViT prepends a learnable [CLS] token before the patch sequence. After the transformer encoder runs, the final hidden state of that token is treated as a summary representation of the whole image and sent to the classification head."
+    },
+    {
+      "stage": "post",
+      "question": "Why did early ViTs need much more data than CNNs to match performance?",
+      "options": ["Because ViTs cannot use positional information", "Because ViTs lack CNN inductive biases like locality and translation invariance", "Because ViTs are limited to grayscale images", "Because ViTs cannot be pretrained self-supervised"],
+      "correct": 1,
+      "explanation": "CNNs start with strong assumptions that nearby pixels matter together and patterns can repeat across locations. ViTs have fewer built-in priors, so they needed large-scale supervised or self-supervised pretraining to learn those regularities from data."
+    }
+  ]
+}

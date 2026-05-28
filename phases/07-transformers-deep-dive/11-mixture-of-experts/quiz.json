@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do very large dense transformers become so expensive at inference time?",
+      "options": ["Because every token activates essentially the full parameter set", "Because only the embedding layer runs for each token", "Because they must retrain the router during decoding", "Because sparse attention doubles the parameter count"],
+      "correct": 0,
+      "explanation": "In a dense transformer, every token pays for the whole model's feed-forward and attention computation. As parameter count rises, active FLOPs per token rise with it, which is the compute wall the lesson describes."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the router's job in a mixture-of-experts layer?",
+      "options": ["To compress the vocabulary before softmax", "To score experts and choose which subset of experts each token should use", "To replace self-attention with convolution", "To shard the training data across epochs"],
+      "correct": 1,
+      "explanation": "The router is a small learned scoring function over experts for each token. It decides which experts are active, making MoE sparse because only a few FFNs run per token instead of all of them."
+    },
+    {
+      "stage": "post",
+      "question": "In the lesson's MoE framing, how do total parameters and active parameters per token scale?",
+      "options": ["Both scale with E, the number of experts", "Total parameters scale with E, while active parameters scale with k, the number of selected experts", "Total parameters scale with k, while active parameters scale with E", "Neither depends on E or k once training starts"],
+      "correct": 1,
+      "explanation": "MoE stores many experts, so total parameter count grows with the number of experts E. But each token only runs through k experts, so active computation per token grows with k instead of the full model size."
+    },
+    {
+      "stage": "post",
+      "question": "What is the key idea behind DeepSeek-V3's auxiliary-loss-free load balancing?",
+      "options": ["It changes gate probabilities directly with an extra cross-entropy term", "It adds a per-expert bias for top-k selection while keeping gating based on the raw scores", "It forces every token through every expert once per batch", "It removes top-k routing and uses random hashing instead"],
+      "correct": 1,
+      "explanation": "The lesson emphasizes that DeepSeek-V3 adjusts a learned bias used only for selecting experts, not for computing the gate weights themselves. That separates load balancing from the main modeling probabilities and avoids adding an auxiliary loss term."
+    },
+    {
+      "stage": "post",
+      "question": "What are shared experts in modern fine-grained MoE models?",
+      "options": ["Experts that are never used during inference", "Experts that every token passes through in addition to routed experts", "Experts reserved only for the embedding layer", "Experts that store positional embeddings for long context"],
+      "correct": 1,
+      "explanation": "Shared experts are always active and capture common knowledge that should apply to nearly every token. Routed experts then provide specialized sparse computation on top, which is how DeepSeek-style architectures mix general and specialized behavior."
+    }
+  ]
+}

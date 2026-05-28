@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a decoder-only language model need a causal mask during training?",
+      "options": [
+        "So each token can look at future targets and learn faster",
+        "So each position only uses past context when predicting the next token",
+        "So the model ignores positional embeddings",
+        "So the feedforward network becomes reversible"
+      ],
+      "correct": 1,
+      "explanation": "A decoder-only LM is trained to predict the next token, so letting it see future tokens would leak the answer. The causal mask preserves the autoregressive setting used again at generation time."
+    },
+    {
+      "stage": "pre",
+      "question": "What does \u201cshift-by-one cross-entropy\u201d mean in language modeling?",
+      "options": [
+        "Predict the previous token from the current one",
+        "Compare each position's logits to the token one step ahead in the sequence",
+        "Train only on every other token to save compute",
+        "Shift the vocabulary IDs before embedding lookup"
+      ],
+      "correct": 1,
+      "explanation": "In causal LM training, the model reads tokens up to position t and is scored on whether it predicts token t+1. The lesson uses this standard objective in the capstone training loop."
+    },
+    {
+      "stage": "post",
+      "question": "Which component stack matches the capstone GPT architecture described in the lesson?",
+      "options": [
+        "Token embedding \u2192 convolution stack \u2192 classifier head",
+        "Token embedding + positional embedding \u2192 repeated pre-norm attention/FFN blocks \u2192 final RMSNorm \u2192 tied LM head",
+        "Encoder stack \u2192 cross-attention decoder \u2192 CRF head",
+        "Only an FFN repeated L times without attention"
+      ],
+      "correct": 1,
+      "explanation": "The capstone assembles the lessons into a decoder-only transformer with embeddings, stacked blocks, and a final normalized LM head. It specifically uses pre-norm blocks, causal multi-head attention, SwiGLU FFNs, and tied embeddings."
+    },
+    {
+      "stage": "post",
+      "question": "Which simplification does the capstone intentionally make to keep the reference implementation manageable?",
+      "options": [
+        "It removes attention and keeps only SwiGLU layers",
+        "It uses learned positional embeddings and omits a KV cache in generation",
+        "It trains with MoE routing in every block",
+        "It requires a BPE tokenizer with a 50k vocabulary"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly says RoPE is left out for simplicity and generation recomputes the full prefix instead of using a KV cache. Those omissions keep the code shorter while still matching the core transformer training path."
+    },
+    {
+      "stage": "post",
+      "question": "What training outcome does the lesson give as a target for the 4-layer, 4-head, d_model=128 capstone on tinyshakespeare?",
+      "options": [
+        "Loss stays near 4.2 and samples remain random after 2,000 steps",
+        "Training loss falls to about 1.5 and samples become Shakespeare-shaped",
+        "Validation loss instantly reaches 0.1 because the corpus is tiny",
+        "The model cannot train on a laptop at all"
+      ],
+      "correct": 1,
+      "explanation": "The capstone lesson sets concrete expectations: a small model should train in minutes and push loss from random-baseline territory down to around 1.5. The generated text is not correct Shakespeare, but it should clearly look Shakespeare-like in style and structure."
+    }
+  ]
+}

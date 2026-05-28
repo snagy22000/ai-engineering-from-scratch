@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "If you already know an environment's transition probabilities and rewards exactly, what broad strategy becomes possible?",
+      "options": [
+        "Solve values by repeatedly applying Bellman-style updates instead of relying only on sampled episodes",
+        "Skip defining states and actions because the model already contains them",
+        "Use only Monte Carlo returns because exact models add too much variance",
+        "Avoid computing any policy until after deployment"
+      ],
+      "correct": 0,
+      "explanation": "Dynamic programming assumes you have a model and can compute expected backups directly. That makes exact Bellman iteration possible and removes the need to estimate everything only from sampled trajectories."
+    },
+    {
+      "stage": "pre",
+      "question": "What does it usually mean for a policy to be greedy with respect to a value function?",
+      "options": [
+        "It chooses the action with the highest immediate reward only",
+        "It chooses the action that looks best under the current long-term value estimate",
+        "It samples all actions uniformly",
+        "It copies the previous policy exactly"
+      ],
+      "correct": 1,
+      "explanation": "A greedy policy picks the action with the largest estimated expected return under the current value function. This idea is the intuitive basis for policy improvement before the lesson formalizes it."
+    },
+    {
+      "stage": "post",
+      "question": "What are the two alternating phases of policy iteration in the lesson?",
+      "options": [
+        "Sampling and replay",
+        "Evaluation and improvement",
+        "Prediction and classification",
+        "Encoding and decoding"
+      ],
+      "correct": 1,
+      "explanation": "Policy iteration repeatedly evaluates the current policy to obtain V^pi and then improves the policy by acting greedily with respect to that value function. The lesson presents this as the canonical two-step DP loop."
+    },
+    {
+      "stage": "post",
+      "question": "How does value iteration differ from policy iteration in the lesson's presentation?",
+      "options": [
+        "It avoids Bellman updates entirely",
+        "It collapses evaluation and improvement into one Bellman optimality sweep",
+        "It requires exploring starts",
+        "It can only be used when gamma = 1"
+      ],
+      "correct": 1,
+      "explanation": "Value iteration applies the Bellman optimality equation directly, combining evaluation and improvement in one update. The lesson emphasizes that this makes each iteration simpler, though it may require more iterations overall."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson emphasize using the sup-norm stopping criterion max_s |V_new(s) - V(s)|?",
+      "options": [
+        "Because average error is mathematically identical but slower to compute",
+        "Because the Bellman contraction guarantee is stated in the sup-norm",
+        "Because it produces stochastic policies automatically",
+        "Because it eliminates the need to handle terminal states"
+      ],
+      "correct": 1,
+      "explanation": "The lesson states that the Bellman operator is a gamma-contraction in the sup-norm. That is why the convergence guarantee is tied to the maximum absolute statewise change rather than an average error metric."
+    }
+  ]
+}

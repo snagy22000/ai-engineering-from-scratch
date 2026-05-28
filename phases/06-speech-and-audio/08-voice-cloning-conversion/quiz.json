@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the core primitive shared by voice cloning and voice conversion in this lesson?",
+      "options": ["Separating speaker identity from content", "Predicting text directly from spectrograms", "Removing all prosody from speech", "Compressing audio into MIDI notes"],
+      "correct": 0,
+      "explanation": "The lesson says both tasks depend on factorizing a waveform into content, speaker, and prosody, then recombining those pieces. The key shared idea is that speaker identity can be separated from what was said."
+    },
+    {
+      "stage": "pre",
+      "question": "What extra input does zero-shot voice cloning need in addition to the text to be spoken?",
+      "options": ["A short reference recording of the target speaker", "The speaker's age and hometown", "A transcript of the model's entire training set", "A MIDI melody guide"],
+      "correct": 0,
+      "explanation": "The lesson explains zero-shot cloning as conditioning a pretrained TTS model on a short reference clip. That clip is encoded into a speaker embedding, which gives the model the target voice identity without per-speaker fine-tuning."
+    },
+    {
+      "stage": "post",
+      "question": "In the lesson's description of KNN-VC, how does the conversion step work?",
+      "options": ["It predicts lyrics from the source waveform and resings them", "It replaces each source frame with its nearest neighbor from the target pool", "It fine-tunes a new speaker every time before inference", "It converts audio by resampling the target to a new pitch"],
+      "correct": 1,
+      "explanation": "The lesson explains that KNN-VC extracts per-frame embeddings and performs non-parametric retrieval against a target pool. Each source frame is swapped for the nearest matching target frame representation, which preserves content while changing speaker identity."
+    },
+    {
+      "stage": "post",
+      "question": "What is the lesson's warning about the reference transcript when using F5-TTS for zero-shot cloning?",
+      "options": ["It should be longer than the audio clip", "It can be approximate as long as the speaker is correct", "It must exactly match the reference audio or alignment breaks", "It should be translated into English first"],
+      "correct": 2,
+      "explanation": "The F5-TTS example in the lesson says the reference transcript must exactly match the audio. It emphasizes that even mismatches in wording or punctuation can break alignment."
+    },
+    {
+      "stage": "post",
+      "question": "What does SECS measure in the lesson's evaluation table?",
+      "options": ["Runtime latency on consumer GPUs", "Bit accuracy of the watermark payload", "Word error rate of the cloned output", "Cosine similarity between target and clone speaker embeddings"],
+      "correct": 3,
+      "explanation": "The lesson defines SECS as speaker embedding cosine similarity and uses it as a cloning fidelity metric. Higher SECS means the generated voice is more similar to the target speaker's identity."
+    }
+  ]
+}

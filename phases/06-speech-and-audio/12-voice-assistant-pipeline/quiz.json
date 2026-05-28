@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why should a voice assistant start streaming TTS before the full reply is completely finished?",
+      "options": ["To reduce perceived latency for the user", "To make VAD unnecessary", "To avoid using an LLM at all", "To guarantee that no tool calls are needed"],
+      "correct": 0,
+      "explanation": "The lesson treats latency as a first-class product requirement for voice assistants. Starting audio output as soon as possible makes the system feel responsive even while later parts of the reply are still being generated."
+    },
+    {
+      "stage": "pre",
+      "question": "According to the lesson, what does the VAD component signal in the seven-component pipeline?",
+      "options": ["The start and end of user speech", "The speaker's identity and emotion", "The LLM's tool choice and JSON schema", "The TTS voice and playback speed"],
+      "correct": 0,
+      "explanation": "In the seven components list, the VAD stage is described as using settings like threshold, minimum speech, and silence hang-over. Its role is to mark when user speech begins and when the turn has ended."
+    },
+    {
+      "stage": "post",
+      "question": "What specific adjustment does the lesson recommend to reduce the first-word clip failure mode?",
+      "options": ["Lower the start threshold to 0.3 instead of 0.5", "Raise the start threshold to 0.8 so speech is cleaner", "Disable pre-roll to avoid buffering delays", "Wait for the full transcript before starting STT"],
+      "correct": 0,
+      "explanation": "The lesson says first-word clipping happens when VAD triggers a beat too late and misses the user's opening sound. Its explicit fix is to start at threshold 0.3 rather than 0.5."
+    },
+    {
+      "stage": "post",
+      "question": "If VAD fires while TTS playback is active, what should the interruption handler do next?",
+      "options": ["Cancel TTS, stop playback, and begin a new user turn", "Ignore the user until the current reply finishes", "Only stop playback after the current sentence ends", "Restart the microphone stream but keep the old LLM response running"],
+      "correct": 0,
+      "explanation": "Both the architecture description and the pseudocode emphasize barge-in handling. When user speech is detected mid-response, the assistant should stop talking, cancel the ongoing response, and restart listening for the new turn."
+    },
+    {
+      "stage": "post",
+      "question": "Which reference stack does the lesson identify as the privacy- or edge-focused offline option?",
+      "options": ["Whisper.cpp + llama.cpp + Kokoro-ONNX", "LiveKit + Deepgram + GPT-4o + Cartesia", "Vapi / Retell managed stack", "Moshi full-duplex stack"],
+      "correct": 0,
+      "explanation": "The production reference table lists several stack options with different trade-offs. The offline row is Whisper.cpp + llama.cpp + Kokoro-ONNX, and the notes explicitly label it for privacy and edge use cases."
+    }
+  ]
+}

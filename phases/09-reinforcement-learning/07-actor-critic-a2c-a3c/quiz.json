@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is raw Monte Carlo return a difficult signal for policy updates?",
+      "options": [
+        "It has high variance from episode to episode",
+        "It cannot be computed unless the environment is deterministic",
+        "It always underestimates long-term reward",
+        "It only works for discrete actions"
+      ],
+      "correct": 0,
+      "explanation": "The lesson opens by stressing that REINFORCE is noisy because full returns can vary dramatically across episodes. Multiplying those noisy returns by log-policy gradients leads to slow, high-variance learning."
+    },
+    {
+      "stage": "pre",
+      "question": "What intuitive role does a baseline play in policy-gradient methods?",
+      "options": [
+        "It forces the policy to be deterministic",
+        "It gives the agent a comparison point for whether an action did better or worse than expected",
+        "It replaces the need for rewards",
+        "It makes the method off-policy"
+      ],
+      "correct": 1,
+      "explanation": "A baseline lets the agent compare observed outcomes against what was expected from the state. This is exactly the intuition behind advantage: actions are judged by whether they were above or below average for that state."
+    },
+    {
+      "stage": "post",
+      "question": "In actor-critic, what are the actor and critic responsible for?",
+      "options": [
+        "The actor estimates returns and the critic samples actions",
+        "The actor stores replay data and the critic clips rewards",
+        "The actor outputs the policy and the critic estimates state value",
+        "The actor computes entropy and the critic computes KL divergence"
+      ],
+      "correct": 2,
+      "explanation": "The lesson defines the actor as pi_theta(a|s), the policy used to act, and the critic as V_phi(s), the value estimator trained by regression. The critic supplies a lower-variance learning signal to the actor."
+    },
+    {
+      "stage": "post",
+      "question": "Which expression is the one-step TD advantage used in actor-critic?",
+      "options": [
+        "G_t - V(s_t)",
+        "r_{t+1} + gamma V(s_{t+1}) - V(s_t)",
+        "Q(s_t,a_t) - Q(s_{t+1},a_{t+1})",
+        "log pi(a_t|s_t) - V(s_t)"
+      ],
+      "correct": 1,
+      "explanation": "The lesson names the TD-residual advantage as delta_t = r_{t+1} + gamma V(s_{t+1}) - V(s_t). It is biased because it uses the learned value function, but it usually has much lower variance than Monte Carlo advantage."
+    },
+    {
+      "stage": "post",
+      "question": "What is the main practical difference between A2C and A3C in the lesson?",
+      "options": [
+        "A2C is off-policy while A3C is on-policy",
+        "A2C uses synchronous batched environments, while A3C uses asynchronous worker threads updating shared parameters",
+        "A2C has no critic, while A3C has a critic",
+        "A2C requires replay buffers, while A3C requires target networks"
+      ],
+      "correct": 1,
+      "explanation": "A2C collects rollouts synchronously across parallel environments and updates on a combined batch. A3C instead runs multiple workers asynchronously and lets them push gradients to shared parameters, which was important for CPU-scale training."
+    }
+  ]
+}

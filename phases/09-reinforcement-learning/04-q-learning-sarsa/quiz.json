@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the key intuition behind bootstrapping in reinforcement learning?",
+      "options": [
+        "Update a value estimate using another current estimate as part of the target",
+        "Wait until the end of the episode before making any update",
+        "Assume rewards are always zero-mean",
+        "Choose actions uniformly to reduce bias"
+      ],
+      "correct": 0,
+      "explanation": "Bootstrapping means using an estimated future value inside the target for the current update. The lesson positions TD methods as the bridge between Monte Carlo's full returns and dynamic programming's exact backups."
+    },
+    {
+      "stage": "pre",
+      "question": "If learning must happen online before an episode ends, which family of methods is most naturally suited?",
+      "options": [
+        "Temporal-difference methods",
+        "Only pure Monte Carlo methods",
+        "Only supervised classification methods",
+        "Only dynamic programming with a known model"
+      ],
+      "correct": 0,
+      "explanation": "Temporal-difference methods update after each transition rather than waiting for full episodic returns. That makes them better suited for online learning and long episodes than pure Monte Carlo."
+    },
+    {
+      "stage": "post",
+      "question": "What is the TD(0) target for updating a state value V(s) in the lesson?",
+      "options": [
+        "r + gamma V(s')",
+        "max_a Q(s,a)",
+        "The full return from the start of the episode",
+        "r - V(s')"
+      ],
+      "correct": 0,
+      "explanation": "The lesson writes the TD(0) update as V(s) <- V(s) + alpha[r + gammaV(s') - V(s)]. The target is therefore the immediate reward plus the discounted estimate of the next state's value."
+    },
+    {
+      "stage": "post",
+      "question": "What is the essential difference between Q-learning and SARSA?",
+      "options": [
+        "Q-learning is on-policy and SARSA is off-policy",
+        "Q-learning uses the greedy max over next actions in its target, while SARSA uses the actual next action taken",
+        "Q-learning requires terminal episodes but SARSA does not",
+        "SARSA cannot learn action values"
+      ],
+      "correct": 1,
+      "explanation": "Q-learning bootstraps from max_{a'} Q(s',a'), which corresponds to a greedy target policy even while behavior explores. SARSA instead uses Q(s',a') for the action actually selected next, making it on-policy."
+    },
+    {
+      "stage": "post",
+      "question": "Why does SARSA often learn a safer path than Q-learning in cliff-walking, according to the lesson?",
+      "options": [
+        "Because SARSA ignores future rewards",
+        "Because SARSA includes the consequences of exploratory next actions in its value estimates",
+        "Because Q-learning cannot use epsilon-greedy exploration",
+        "Because SARSA requires a known transition model"
+      ],
+      "correct": 1,
+      "explanation": "The lesson's cliff-walking example shows that SARSA evaluates behavior under the same exploratory policy it actually follows. That makes risky states near the cliff look worse when exploratory mistakes can still happen, leading to more conservative behavior."
+    }
+  ]
+}
